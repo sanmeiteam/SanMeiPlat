@@ -1,0 +1,8 @@
+spring:
+  datasource:
+      url: jdbc:mysql://123.206.62.148:3306/SMDB?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+   mapperLocations: classpath:/mapper/*.xml
