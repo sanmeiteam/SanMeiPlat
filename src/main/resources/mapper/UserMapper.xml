@@ -15,6 +15,14 @@
         <result column="nickname" property="nickname"/>
         <result column="roleId" property="roleId"/>
         <result column="roleName" property="roleName"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="phone" property="phone"/>
+        <result column="qq" property="qq"/>
+        <result column="wechat" property="wechat"/>
+        <result column="aera" property="aera"/>
+        <result column="education" property="education"/>
+        <result column="introducer" property="introducer"/>
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
         <result column="lastLoginTime" property="lastLoginTime"/>
@@ -34,17 +42,43 @@
                      username                                username,
                      nickname                                nickname,
                      role_id                                 roleId,
+                     sex                                     sex,
+                     age                                     age,
+                     phone                                   phone,
+                     qq                                      qq,
+                     wechat                                  wechat,
+                     aera                                    aera,
+                     education                               education,
+                     introducer                              introducer,
                      delete_status                           deleteStatus,
                      DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
                  FROM sys_user
                  WHERE delete_status = '1'
+        <if test="keywords !='' and keywords !=null">
+            and
+            (
+            nickname like CONCAT('%', #{keywords}, '%') or
+            username like CONCAT('%', #{keywords}, '%') or
+            sex like CONCAT('%', #{keywords}, '%') or
+            age like CONCAT('%', #{keywords}, '%') or
+            phone like CONCAT('%', #{keywords}, '%') or
+            qq like CONCAT('%', #{keywords}, '%') or
+            wechat like CONCAT('%', #{keywords}, '%') or
+            aera like CONCAT('%', #{keywords}, '%') or
+            education like CONCAT('%', #{keywords}, '%') or
+            introducer like CONCAT('%', #{keywords}, '%')
+            )
+        </if>
+        <if test="roleId !='' and roleId !=null">
+            and role_id = #{roleId}
+        </if>
                  ORDER BY id
-                 LIMIT #{offSet}, #{pageRow}
+                          LIMIT #{offSet}, #{pageRow}
              ) u
-            LEFT JOIN sys_role r ON r.id = u.roleId
-            LEFT JOIN sys_role_permission rp ON rp.role_id = r.id
-            LEFT JOIN sys_permission p ON p.id = rp.permission_id
+                 LEFT JOIN sys_role r ON r.id = u.roleId
+                 LEFT JOIN sys_role_permission rp ON rp.role_id = r.id
+                 LEFT JOIN sys_permission p ON p.id = rp.permission_id
 
         ORDER BY u.userId
     </select>
@@ -59,8 +93,10 @@
 
     <insert id="addUser" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO sys_user
-        (username, password, nickname, role_id) VALUES
-            (#{username}, #{password}, #{nickname}, #{roleId})
+        (username, password, nickname, role_id,
+         sex,age,phone,education,qq,wechat,aera,introducer) VALUES
+            (#{username}, #{password}, #{nickname}, #{roleId},
+             #{sex}, #{age}, #{phone}, #{education}, #{qq}, #{wechat}, #{aera}, #{introducer})
     </insert>
 
     <update id="updateUser">
@@ -72,6 +108,14 @@
         </if>
 
         , role_id = #{roleId}
+        , sex = #{sex}
+        , age = #{age}
+        , phone = #{phone}
+        , education = #{education}
+        , qq = #{qq}
+        , wechat = #{wechat}
+        , aera = #{aera}
+        , introducer = #{introducer}
         , delete_status = #{deleteStatus}
         WHERE id = #{userId} and id != 10001
     </update>
