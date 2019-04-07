@@ -1,4 +1,4 @@
-package com.sanmei.controller;
+package com.sanmei.controller.login;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sanmei.service.LoginService;

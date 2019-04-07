@@ -1,4 +1,4 @@
-package com.sanmei.controller;
+package com.sanmei.controller.user;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sanmei.service.UserService;
@@ -27,7 +27,9 @@ public class UserController {
 	@RequiresPermissions("user:list")
 	@GetMapping("/list")
 	public JSONObject listUser(HttpServletRequest request) {
-		return userService.listUser(CommonUtil.request2Json(request));
+		String username = request.getParameter("username");
+		JSONObject jsonObject = CommonUtil.request2Json(request);
+		return userService.listUser(jsonObject);
 	}
 
 	@RequiresPermissions("user:add")
