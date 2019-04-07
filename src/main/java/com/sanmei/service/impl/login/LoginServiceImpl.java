@@ -1,9 +1,9 @@
-package com.sanmei.service.impl;
+package com.sanmei.service.impl.login;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sanmei.dao.LoginDao;
-import com.sanmei.service.LoginService;
-import com.sanmei.service.PermissionService;
+import com.sanmei.dao.login.LoginDao;
+import com.sanmei.service.inf.login.LoginService;
+import com.sanmei.service.inf.permission.PermissionService;
 import com.sanmei.util.CommonUtil;
 import com.sanmei.util.constants.Constants;
 import org.apache.shiro.SecurityUtils;

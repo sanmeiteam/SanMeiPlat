@@ -1,4 +1,4 @@
-package com.sanmei.service;
+package com.sanmei.service.inf.user;
 
 import com.alibaba.fastjson.JSONObject;
 

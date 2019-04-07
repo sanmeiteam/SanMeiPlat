@@ -1,8 +1,8 @@
-package com.sanmei.service.impl;
+package com.sanmei.service.impl.article;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sanmei.dao.ArticleDao;
-import com.sanmei.service.ArticleService;
+import com.sanmei.dao.article.ArticleDao;
+import com.sanmei.service.inf.article.ArticleService;
 import com.sanmei.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

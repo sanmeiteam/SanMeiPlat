@@ -13,7 +13,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  * @date: 2017/10/24 11:55
  */
 @SpringBootApplication
-@MapperScan("com.sanmei.dao")
+@MapperScan("com.sanmei.dao.*")
 public class MyApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

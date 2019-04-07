@@ -1,7 +1,7 @@
 package com.sanmei.controller.user;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sanmei.service.UserService;
+import com.sanmei.service.inf.user.UserService;
 import com.sanmei.util.CommonUtil;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

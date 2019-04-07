@@ -1,4 +1,4 @@
-package com.sanmei.dao;
+package com.sanmei.dao.permission;
 
 import com.alibaba.fastjson.JSONObject;
 

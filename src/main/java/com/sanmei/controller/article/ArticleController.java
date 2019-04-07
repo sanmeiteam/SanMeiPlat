@@ -1,7 +1,7 @@
 package com.sanmei.controller.article;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sanmei.service.ArticleService;
+import com.sanmei.service.inf.article.ArticleService;
 import com.sanmei.util.CommonUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;

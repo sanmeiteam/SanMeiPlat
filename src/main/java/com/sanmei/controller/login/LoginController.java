@@ -1,7 +1,7 @@
 package com.sanmei.controller.login;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sanmei.service.LoginService;
+import com.sanmei.service.inf.login.LoginService;
 import com.sanmei.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,4 +1,4 @@
-package com.sanmei.dao;
+package com.sanmei.dao.user;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.annotations.Param;

@@ -1,7 +1,7 @@
 package com.sanmei.config.shiro;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sanmei.service.LoginService;
+import com.sanmei.service.inf.login.LoginService;
 import com.sanmei.util.constants.Constants;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;

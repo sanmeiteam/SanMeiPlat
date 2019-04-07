@@ -1,8 +1,8 @@
-package com.sanmei.service.impl;
+package com.sanmei.service.impl.permission;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sanmei.dao.PermissionDao;
-import com.sanmei.service.PermissionService;
+import com.sanmei.dao.permission.PermissionDao;
+import com.sanmei.service.inf.permission.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
