@@ -34,23 +34,23 @@
     <select id="listUser" resultMap="userMap">
         SELECT
         u.*,
-        r.role_name                            roleName,
+        r.role_name roleName,
         CONCAT(p.menu_name, p.permission_name) permissionName
         FROM (
         SELECT
-        id                                      userId,
-        username                                username,
-        nickname                                nickname,
-        role_id                                 roleId,
-        sex                                     sex,
-        age                                     age,
-        phone                                   phone,
-        qq                                      qq,
-        wechat                                  wechat,
-        aera                                    aera,
-        education                               education,
-        introducer                              introducer,
-        delete_status                           deleteStatus,
+        id userId,
+        username username,
+        nickname nickname,
+        role_id roleId,
+        sex sex,
+        age age,
+        phone phone,
+        qq qq,
+        wechat wechat,
+        aera aera,
+        education education,
+        introducer introducer,
+        delete_status deleteStatus,
         DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
         DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
         FROM sys_user
@@ -242,4 +242,46 @@
          WHERE username=#{username}
          AND delete_status='1';
     </select>
+
+    <insert id="saveSysUser" parameterType="com.sanmei.util.model.SysUser">
+        insert into sys_user
+        real_name,
+        username,
+        password,
+        nickname,
+        role_id,
+        delete_status,
+        sex,
+        age,
+        phone,
+        qq,
+        wechat,
+        aera,
+        education,
+        introducer,
+        create_time,
+        update_time
+        values(
+        #{realName},
+        #{userName},
+        #{passWord},
+        #{nickName},
+        case when #{roleName} == '管理员' then '1'
+             else #{roleName} == '委员' then '2'
+             else #{roleName} == '讲师' then '3'
+             else #{roleName} == '学员' then '4'
+             end,
+       #{deleteStatus},
+       #{sex} ,
+       #{age}，
+       #{phone}，
+       #{qq}，
+       #{wechat}，
+       #{aera}，
+       #{education}，
+       #{introducer}，
+       #{createTime}，
+       #{updateTime}
+        )
+    </insert>
 </mapper>

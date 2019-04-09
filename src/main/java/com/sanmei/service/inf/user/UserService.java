@@ -1,6 +1,7 @@
 package com.sanmei.service.inf.user;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sanmei.util.model.SysUser;
 
 /**
  * @author: hxy
@@ -53,4 +54,8 @@ public interface UserService {
 	 * 删除角色
 	 */
 	JSONObject deleteRole(JSONObject jsonObject);
+
+
+	int saveSysUser(SysUser sysUser);
+
 }

@@ -1,6 +1,7 @@
 package com.sanmei.dao.user;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sanmei.util.model.SysUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -90,4 +91,11 @@ public interface UserDao {
 	 * 删除本角色全部权限
 	 */
 	int removeRoleAllPermission(JSONObject jsonObject);
+
+	/**
+	 * 新增
+	 * @param sysUser
+	 * @return
+	 */
+	int saveSysUser(SysUser sysUser);
 }
