@@ -243,9 +243,9 @@
          AND delete_status='1';
     </select>
 
-    <insert id="saveSysUser" parameterType="com.sanmei.util.model.SysUser">
+    <insert id="saveSysUser" parameterType="com.sanmei.util.model.sysUser.SysUser">
         insert into sys_user
-        real_name,
+        (real_name,
         username,
         password,
         nickname,
@@ -260,27 +260,23 @@
         education,
         introducer,
         create_time,
-        update_time
+        update_time)
         values(
         #{realName},
         #{userName},
         #{passWord},
         #{nickName},
-        case when #{roleName} == '管理员' then '1'
-             else #{roleName} == '委员' then '2'
-             else #{roleName} == '讲师' then '3'
-             else #{roleName} == '学员' then '4'
-             end,
+        (select id from sys_role where role_name = #{roleName} limit 1),
        #{deleteStatus},
        #{sex} ,
-       #{age}，
-       #{phone}，
-       #{qq}，
-       #{wechat}，
-       #{aera}，
-       #{education}，
-       #{introducer}，
-       #{createTime}，
+       #{age},
+       #{phone},
+       #{qq},
+       #{wechat},
+       #{aera},
+       #{education},
+       #{introducer},
+       #{createTime},
        #{updateTime}
         )
     </insert>

@@ -3,21 +3,17 @@ package com.sanmei.controller.user;
 import com.alibaba.fastjson.JSONObject;
 import com.sanmei.config.exception.ArgumentException;
 import com.sanmei.config.exception.CommonJsonException;
-import com.sanmei.config.exception.GlobalExceptionHandler;
 import com.sanmei.service.inf.user.UserService;
 import com.sanmei.util.CommonUtil;
 import com.sanmei.util.ExcelUtils;
 import com.sanmei.util.Response;
 import com.sanmei.util.constants.ErrorEnum;
-import com.sanmei.util.model.SysUser;
-import org.apache.poi.hssf.usermodel.HSSFCell;
+import com.sanmei.util.model.sysUser.SysUser;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.formula.functions.Count;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,9 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Iterator;
 
 /**
@@ -222,5 +216,16 @@ public class UserController {
     public JSONObject deleteRole(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "roleId");
         return userService.deleteRole(requestJson);
+    }
+
+    @RequestMapping(value = "m1")
+    public void m1() {
+        {
+            SysUser sysUser = new SysUser();
+            sysUser.setUserName("哈哈哈哈哈");
+            sysUser.setCreateTime(LocalDate.now());
+            int i = userService.saveSysUser(sysUser);
+        }
+
     }
 }
