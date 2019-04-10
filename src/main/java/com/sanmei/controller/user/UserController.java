@@ -60,12 +60,10 @@ public class UserController {
      * 导入用户excel写入数据库
      *
      * @param request
-     * @param jsonObject
      * @return
      */
-//    @RequiresPermissions("user:importUserExcel")
     @PostMapping(value = "importUserExcel")
-    public Response<String> importExcel(HttpServletRequest request, JSONObject jsonObject) {
+    public Response<String> importExcel(HttpServletRequest request) {
         Response<String> response = new Response<>();
         String username = request.getParameter("username");
         MultipartHttpServletRequest multipartRequest = null;
@@ -92,11 +90,11 @@ public class UserController {
             HSSFSheet sheet = hssfWorkbook.getSheetAt(0);
             int count = 0;
             //从第一行开始,第一行是表头
-            for (int i = 1; i < sheet.getLastRowNum(); i++) {
+            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 HSSFRow row = sheet.getRow(i);
+                SysUser sysUser = new SysUser();
                 for (int j = 0; j < row.getLastCellNum(); j++) {
                     String stringValue = ExcelUtils.getStringValue(row.getCell(j));
-                    SysUser sysUser = new SysUser();
                     //姓名
                     if (j == 0) {
                         sysUser.setRealName(stringValue);
@@ -134,10 +132,10 @@ public class UserController {
                     sysUser.setCreateTime(LocalDate.now());
                     sysUser.setUpdateTime(LocalDate.now());
                     sysUser.setDeleteStatus("1");
-                    //插入sysuser
-                    int i1 = userService.saveSysUser(sysUser);
-                    count += i1;
                 }
+                //插入sysuser
+                int i1 = userService.saveSysUser(sysUser);
+                count += i1;
             }
             response.setResult("导入了" + count + "条数据");
         } catch (ArgumentException e) {
