@@ -262,7 +262,7 @@
         create_time,
         update_time)
         values(
-        #{realName},
+        #{nickname},
         #{userName},
         #{passWord},
         #{nickName},
