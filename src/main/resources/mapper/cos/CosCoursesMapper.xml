@@ -44,4 +44,87 @@
         </where>
     </select>
 
+    <!--修改&删除都-->
+    <update id="updateCosCourses" parameterType="com.sanmei.util.model.cos.CosCourses">
+        update cos_courses set
+        <trim suffixOverrides="and">
+            <if test="courseName != null">
+                course_name = #{courseNumber} and
+            </if>
+            <if test="courseNumber != null">
+                course_number = #{courseNumber} and
+            </if>
+            <if test="teacher != null">
+                teacher = #{teacher} and
+            </if>
+            <if test="address != null">
+                address = #{address} and
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime} and
+            </if>
+            <if test="signTeacher != null ">
+                sign_teacher = #{signTeacher} and
+            </if>
+            <if test="signTel != null">
+                sign_tel = #{signTel} and
+            </if>
+            <if test="organizer != null">
+                organizer = #{organizer} and
+            </if>
+            <if test="deleteStatus != null">
+                delete_status = #{deleteStatus} and
+            </if>
+        </trim>
+        <trim suffixOverrides="and">
+            <where>
+                <choose>
+                    <when test="id != null">
+                        id = #{id} and
+                    </when>
+                    <otherwise>
+                        <if test="courseName != null">
+                            course_name = #{courseNumber} and
+                        </if>
+                        <if test="courseNumber != null">
+                            course_number = #{courseNumber} and
+                        </if>
+                    </otherwise>
+                </choose>
+            </where>
+        </trim>
+    </update>
+
+    <insert id="saveCosCourses" parameterType="com.sanmei.util.model.cos.CosCourses">
+        insert into cos_courses
+        (course_type_id,
+        course_number,
+        course_name,
+        teacher,
+        address,
+        start_time,
+        sign_teacher,
+        sign_tel,
+        organizer,
+        delete_status,
+        create_time,
+        update_time
+        )
+        values
+        (
+        select id from cos_course_type where course_type = #{courseType},
+        #{courseNumber},
+        #{courseName},
+        #{teacher},
+        #{address},
+        #{startTime},
+        #{signTeacher},
+        #{signTel},
+        #{organizer},
+        #{deleteStatus},
+        #{createTime},
+        #{updateTime}
+        )
+    </insert>
+
 </mapper>

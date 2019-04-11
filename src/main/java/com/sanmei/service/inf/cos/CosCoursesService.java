@@ -18,4 +18,8 @@ public interface CosCoursesService {
      */
     List<CosCourses> selectCosCourses(CosCourses cosCourses);
 
+    Integer updateCosCourses(CosCourses cosCourses);
+
+    Integer saveCosCourses(CosCourses cosCourses);
+
 }

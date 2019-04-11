@@ -6,9 +6,7 @@ import com.sanmei.util.Response;
 import com.sanmei.util.model.cos.CosCourses;
 import jdk.internal.dynalink.linker.LinkerServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +23,11 @@ public class CosCoursesController {
     private CosCoursesService cosCoursesService;
 
 
+    /**
+     * 查询
+     * @param cosCourses
+     * @return
+     */
     @GetMapping(value = "selectCosCourses")
     public Response<List<CosCourses>> selectCosCourses(CosCourses cosCourses) {
         Response<List<CosCourses>> response = new Response<>();
@@ -34,6 +37,43 @@ public class CosCoursesController {
         } catch (ArgumentException e) {
             e.printStackTrace();
             response.setError("查询失败,请检查错误");
+        }
+        return response;
+    }
+
+
+    /**
+     * 更新or删除
+     * @param cosCourses
+     * @return
+     */
+    @PutMapping(value = "updateCosCourses")
+    public Response<String> updateCosCourses(CosCourses cosCourses) {
+        Response<String> response = new Response<>();
+        try {
+            cosCoursesService.updateCosCourses(cosCourses);
+            response.setResult("更新成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setError("更新失败");
+        }
+        return response;
+    }
+
+    /**
+     * 新增
+     * @param cosCourses
+     * @return
+     */
+    @PostMapping(value = "saveCosCourses")
+    public Response<String> saveCosCourses(CosCourses cosCourses) {
+        Response<String> response = new Response<>();
+        try {
+            cosCoursesService.saveCosCourses(cosCourses);
+            response.setResult("更新成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setError("更新失败");
         }
         return response;
     }
