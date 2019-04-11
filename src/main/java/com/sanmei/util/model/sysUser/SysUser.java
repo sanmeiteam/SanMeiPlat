@@ -14,7 +14,7 @@ public class SysUser implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String id;
-    private String realName; //真实姓名
+    private String nickname; //真实姓名
     private String userName; //用户名
     private String passWord; //密码
     private String nickName; //昵称
@@ -40,12 +40,12 @@ public class SysUser implements Serializable {
         this.roleName = roleName;
     }
 
-    public String getRealName() {
-        return realName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setRealName(String realName) {
-        this.realName = realName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public static long getSerialVersionUID() {

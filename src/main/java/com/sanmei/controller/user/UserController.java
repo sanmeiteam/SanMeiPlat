@@ -61,6 +61,7 @@ public class UserController {
      * @param request
      * @return
      */
+    @RequiresPermissions(value = "user:importExcel")
     @PostMapping(value = "importUserExcel")
     public Response<String> importExcel(HttpServletRequest request) {
         Response<String> response = new Response<>();
@@ -96,7 +97,7 @@ public class UserController {
                     String stringValue = ExcelUtils.getStringValue(row.getCell(j));
                     //姓名
                     if (j == 0) {
-                        sysUser.setRealName(stringValue);
+                        sysUser.setNickName(stringValue);
                     } else if (j == 1) {
                         //用户名
                         sysUser.setUserName(stringValue);
@@ -213,16 +214,5 @@ public class UserController {
     public JSONObject deleteRole(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "roleId");
         return userService.deleteRole(requestJson);
-    }
-
-    @RequestMapping(value = "m1")
-    public void m1() {
-        {
-            SysUser sysUser = new SysUser();
-            sysUser.setUserName("哈哈哈哈哈");
-            sysUser.setCreateTime(LocalDate.now());
-            int i = userService.saveSysUser(sysUser);
-        }
-
     }
 }

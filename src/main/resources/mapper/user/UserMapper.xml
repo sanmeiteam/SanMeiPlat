@@ -245,7 +245,7 @@
 
     <insert id="saveSysUser" parameterType="com.sanmei.util.model.sysUser.SysUser">
         insert into sys_user
-        (real_name,
+        (
         username,
         password,
         nickname,
@@ -262,7 +262,6 @@
         create_time,
         update_time)
         values(
-        #{nickname},
         #{userName},
         #{passWord},
         #{nickName},
