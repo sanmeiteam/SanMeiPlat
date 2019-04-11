@@ -1,9 +1,8 @@
 package com.sanmei.dao.user;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sanmei.util.model.sysUser.SysUser;
+import com.sanmei.model.sysUser.SysUser;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 /**

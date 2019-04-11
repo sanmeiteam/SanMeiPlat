@@ -2,10 +2,10 @@ package com.sanmei.service.impl.user;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sanmei.dao.user.UserDao;
+import com.sanmei.model.sysUser.SysUser;
 import com.sanmei.service.inf.user.UserService;
 import com.sanmei.util.CommonUtil;
 import com.sanmei.util.constants.ErrorEnum;
-import com.sanmei.util.model.sysUser.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

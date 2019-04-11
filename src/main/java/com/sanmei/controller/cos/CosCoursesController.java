@@ -1,10 +1,9 @@
 package com.sanmei.controller.cos;
 
 import com.sanmei.config.exception.ArgumentException;
+import com.sanmei.model.cos.CosCourses;
 import com.sanmei.service.inf.cos.CosCoursesService;
 import com.sanmei.util.Response;
-import com.sanmei.util.model.cos.CosCourses;
-import jdk.internal.dynalink.linker.LinkerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,5 +76,4 @@ public class CosCoursesController {
         }
         return response;
     }
-
 }

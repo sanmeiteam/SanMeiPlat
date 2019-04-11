@@ -1,4 +1,4 @@
-package com.sanmei.util.model.cos;
+package com.sanmei.model.cos;
 
 import java.io.Serializable;
 import java.time.LocalDate;

@@ -1,7 +1,6 @@
 package com.sanmei.service.inf.cos;
 
-import com.sanmei.util.model.cos.CosCourses;
-
+import com.sanmei.model.cos.CosCourses;
 import java.util.List;
 
 /**

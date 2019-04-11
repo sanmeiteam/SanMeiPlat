@@ -1,10 +1,11 @@
 package com.sanmei.service.impl.cos;
 
 import com.sanmei.dao.cos.CosCoursesDao;
+import com.sanmei.model.cos.CosCourses;
 import com.sanmei.service.inf.cos.CosCoursesService;
-import com.sanmei.util.model.cos.CosCourses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
@@ -34,9 +35,11 @@ public class CosCoursesServiceImpl implements CosCoursesService {
      * @param cosCourses
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer updateCosCourses(CosCourses cosCourses) {
-        return null;
+        return cosCoursesDao.updateCosCourses(cosCourses);
+
     }
 
     /**
@@ -44,8 +47,9 @@ public class CosCoursesServiceImpl implements CosCoursesService {
      * @param cosCourses
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer saveCosCourses(CosCourses cosCourses) {
-        return null;
+        return cosCoursesDao.saveCosCourses(cosCourses);
     }
 }

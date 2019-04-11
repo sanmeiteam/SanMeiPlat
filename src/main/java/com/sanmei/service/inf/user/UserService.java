@@ -1,7 +1,7 @@
 package com.sanmei.service.inf.user;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sanmei.util.model.sysUser.SysUser;
+import com.sanmei.model.sysUser.SysUser;
 
 /**
  * @author: hxy

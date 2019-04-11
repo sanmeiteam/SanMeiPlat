@@ -1,15 +1,13 @@
 package com.sanmei.controller.cos;
 
-import com.sanmei.dao.cos.CosClassDao;
+import com.sanmei.model.cos.CosClass;
 import com.sanmei.service.inf.cos.CosClassService;
 import com.sanmei.util.Response;
-import com.sanmei.util.model.cos.CosClass;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -37,6 +35,5 @@ public class CosClassController {
             response.setError("失败");
         }
         return response;
-
     }
 }

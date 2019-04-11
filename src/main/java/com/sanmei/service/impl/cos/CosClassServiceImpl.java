@@ -1,8 +1,8 @@
 package com.sanmei.service.impl.cos;
 
 import com.sanmei.dao.cos.CosClassDao;
+import com.sanmei.model.cos.CosClass;
 import com.sanmei.service.inf.cos.CosClassService;
-import com.sanmei.util.model.cos.CosClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

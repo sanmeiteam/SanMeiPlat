@@ -1,6 +1,4 @@
-package com.sanmei.util.model.cos;
-
-import org.apache.tomcat.jni.Local;
+package com.sanmei.model.cos;
 
 import java.io.Serializable;
 import java.time.LocalDate;

@@ -1,8 +1,7 @@
-package com.sanmei.util.model.sysUser;
+package com.sanmei.model.sysUser;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * @description:

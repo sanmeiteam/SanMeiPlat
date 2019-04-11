@@ -1,4 +1,4 @@
-package com.sanmei.util.model;
+package com.sanmei.model;
 
 import com.alibaba.fastjson.JSONObject;
 
