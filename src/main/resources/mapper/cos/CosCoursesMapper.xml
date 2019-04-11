@@ -3,24 +3,45 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sanmei.dao.cos.CosCoursesDao">
 
-    <resultMap id="base" type="com.sanmei.util.model.cos.CosCourses">
+    <resultMap id="baseMap" type="com.sanmei.util.model.cos.CosCourses">
         <id column="id" property="id"></id>
-        <result column="courseTypeId" property="courseTypeId"></result>
-        <result column="courseNumber" property="courseNumber"></result>
-        <result column="courseName" property="courseName"></result>
+        <result column="course_type_id" property="courseTypeId"></result>
+        <result column="course_number" property="courseNumber"></result>
+        <result column="course_name" property="courseName"></result>
         <result column="teacher" property="teacher"></result>
         <result column="address" property="address"></result>
-        <result column="startTime" property="startTime"></result>
-        <result column="signTeacher" property="signTeacher"></result>
-        <result column="signTel" property="signTel"></result>
+        <result column="start_time" property="startTime"></result>
+        <result column="sign_teacher" property="signTeacher"></result>
+        <result column="sign_tel" property="signTel"></result>
         <result column="organizer" property="organizer"></result>
         <result column="delete_status" property="deleteStatus"></result>
-        <result column="createTime" property="createTime"></result>
-        <result column="updateTime" property="updateTime"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
     </resultMap>
-    <select id="selectCosCourses" parameterType="com.sanmei.dao.cos.CosCoursesDao"
-            resultMap="com.sanmei.dao.cos.CosCoursesDao">
-        select * from cos_courses
+    <select id="selectCosCourses" parameterType="com.sanmei.util.model.cos.CosCourses"
+            resultMap="baseMap">
+        SELECT a.*,b.* FROM cos_courses a
+        LEFT JOIN cos_course_type b ON a.course_type_id = b.id
+        <where>
+            <trim>
+                <choose>
+                    <when test="id != null and id != '' ">
+                        id = #{id} and
+                    </when>
+                    <otherwise>
+                        <if test="courseNumber != null">
+                            course_number = #{courseNumber} and
+                        </if>
+                        <if test="courseName != null">
+                            course_name = #{courseName} and
+                        </if>
+                        <if test="teacher != null">
+                            teacher = #{teacher} and
+                        </if>
+                    </otherwise>
+                </choose>
+            </trim>
+        </where>
     </select>
 
 </mapper>

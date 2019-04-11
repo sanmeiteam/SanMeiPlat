@@ -2,7 +2,6 @@ package com.sanmei.dao.cos;
 
 import com.sanmei.util.model.cos.CosClass;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 /**
