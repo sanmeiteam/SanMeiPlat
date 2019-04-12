@@ -1,6 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.sanmei.dao.cos.CosCoursesDao">
+<mapper namespace="com.sanmei.dao.cos.CosCourseTypeDao">
 
+    <resultMap id="baseMap" type="com.sanmei.model.cos.CosCourseType">
+        <id column="id" property="id"/>
+        <result column="course_type" property="courseType"/>
+        <result column="delete_status" property="deleteStatus"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="selectCosCourseType" parameterType="com.sanmei.model.cos.CosCourseType" resultMap="baseMap">
+        select * from cos_course_type
+        <where>
+            <trim suffixOverrides="and">
+                <choose>
+                    <when test="id != null">
+                        id = #{id} and
+                    </when>
+                    <otherwise>
+                        delete_status = 1 and
+                        <if test="courseType != null ">
+                            course_type = #{courseType} and
+                        </if>
+                    </otherwise>
+                </choose>
+            </trim>
+        </where>
+    </select>
+
+    <insert id="saveCosCourseType" parameterType="com.sanmei.model.cos.CosCourseType">
+        insert into cos_course_type
+        <trim suffixOverrides=",">
+            <if test="courseType != null ">
+                course_type,
+            </if>
+            <if test="deleteStatus != null">
+                delete_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="update_time != null">
+                update_time,
+            </if>
+        </trim>
+        <trim suffixOverrides=",">
+            <if test="courseType != null ">
+                #{courseType},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateCosCourseType" parameterType="com.sanmei.model.cos.CosCourseType">
+        update cos_course_type set
+        <trim suffixOverrides="and">
+            <if test="courseType != null ">
+                course_type = #{courseType} and
+            </if>
+            <if test="deleteStatus != null">
+                delete_status = #{deleteStatus} and
+            </if>
+            #{updateTime} = now() and
+        </trim>
+        <where>
+            <trim suffixOverrides="and">
+                <choose>
+                    <when test="id != null">
+                        id = #{id} and
+                    </when>
+                    <otherwise>
+                        <if test="courseType != null ">
+                            course_type = #{courseType} and
+                        </if>
+                    </otherwise>
+                </choose>
+            </trim>
+        </where>
+    </update>
 </mapper>

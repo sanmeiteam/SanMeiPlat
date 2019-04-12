@@ -17,10 +17,12 @@
         <result column="delete_status" property="deleteStatus"></result>
         <result column="create_time" property="createTime"></result>
         <result column="update_time" property="updateTime"></result>
+        <result column="course_type" property="courseType"/>
+
     </resultMap>
     <select id="selectCosCourses" parameterType="com.sanmei.model.cos.CosCourses"
             resultMap="baseMap">
-        SELECT a.*,b.* FROM cos_courses a
+        SELECT a.*,b.course_type FROM cos_courses a
         LEFT JOIN cos_course_type b ON a.course_type_id = b.id
         <where>
             <trim>

@@ -24,6 +24,15 @@ public class CosCourses implements Serializable {
     private String deleteStatus; //是否有效
     private LocalDate createTime;   //创建时间
     private LocalDate updateTime;    //更新时间
+    private String courseType; //课程类型
+
+    public String getCourseType() {
+        return courseType;
+    }
+
+    public void setCourseType(String courseType) {
+        this.courseType = courseType;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
