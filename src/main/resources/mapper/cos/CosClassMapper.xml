@@ -8,6 +8,7 @@
         <result column="course_id" property="courseId"></result>
         <result column="course_name" property="courseName"></result>
         <result column="user_id" property="userId"></result>
+        <result column="username" property="username"></result>
         <result column="nickname" property="nickname"></result>
         <result column="sex" property="sex"></result>
         <result column="role" property="role"></result>
@@ -20,13 +21,63 @@
 
     <select id="selectCosClass" parameterType="com.sanmei.model.cos.CosClass"
             resultMap="baseMap">
-        select cla.id,cla.course_id,cos.course_name,cla.user_id,
+        select cla.id,cla.course_id,cos.course_name,cla.user_id,usr.username
                usr.nickname,usr.sex,cla.role,cla.old_member,cla.score,
                cla.delete_status,cla.create_time,cla.update_time
         from cos_class cla
                  left join cos_courses cos on cla.course_id=cos.id
                  left join sys_user usr on cla.user_id=usr.id
         where cla.delete_status = 1
+    </select>
+
+    <!--修改-->
+    <update id="updateCosClass" parameterType="com.sanmei.model.cos.CosClass">
+        update cos_class set
+        course_id = #{courseId},
+        user_id = #{userId},
+        role = #{role},
+        old_member = #{old_member},
+        score = #{score}
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <!--新增-->
+    <insert id="addCosClass" parameterType="com.sanmei.model.cos.CosClass">
+        insert into cos_class
+        (course_id,
+         user_id,
+         role,
+         old_member,
+         score,
+         delete_status)
+        values
+        (
+            #{courseId},
+            #{userId},
+            #{role},
+            #{old_member},
+            #{score},
+            '1'
+        )
+    </insert>
+
+    <!--逻辑删除-->
+    <update id="deleteCosClass" parameterType="com.sanmei.model.cos.CosClass">
+        update cos_class set
+        delete_status = '2'
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="getCourses" resultType="com.sanmei.model.cos.CosCourses">
+        SELECT
+            id          courseId,
+            course_name courseName
+        FROM cos_courses
+        WHERE delete_status='1'
     </select>
 
 </mapper>

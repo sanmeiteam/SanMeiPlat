@@ -1,6 +1,7 @@
 package com.sanmei.dao.cos;
 
 import com.sanmei.model.cos.CosClass;
+import com.sanmei.model.cos.CosCourses;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
@@ -13,11 +14,23 @@ import java.util.List;
 public interface CosClassDao {
 
     /**
-     *
+     * 查询
      * @param CosClass
      * @return
      */
     @Transactional
     List<CosClass> selectCosClass(CosClass CosClass);
 
+    Integer updateCosClass(CosClass CosClass);
+
+    Integer addCosClass(CosClass CosClass);
+
+    Integer deleteCosClass(CosClass CosClass);
+
+    /**
+     * 查询所有的角色
+     * 在添加/修改用户的时候要使用此方法
+     * @param
+     */
+    List<CosCourses> getCourses();
 }
