@@ -2,6 +2,7 @@ package com.sanmei.config.exception;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sanmei.util.CommonUtil;
+import com.sanmei.util.Response;
 import com.sanmei.util.constants.ErrorEnum;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -19,13 +20,13 @@ import javax.servlet.http.HttpServletRequest;
  * @description: 统一异常拦截
  * @date: 2017/10/24 10:31
  */
-@ControllerAdvice
-@ResponseBody
+//@ControllerAdvice
+//@ResponseBody
 public class GlobalExceptionHandler {
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
 	@ExceptionHandler(value = Exception.class)
-	public JSONObject defaultErrorHandler(HttpServletRequest req, Exception e) {
+	public Response<String> defaultErrorHandler(HttpServletRequest req, Exception e) {
 		String errorPosition = "";
 		//如果错误堆栈信息存在
 		if (e.getStackTrace().length > 0) {
@@ -34,14 +35,16 @@ public class GlobalExceptionHandler {
 			int lineNumber = element.getLineNumber();
 			errorPosition = fileName + ":" + lineNumber;
 		}
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("code", ErrorEnum.E_400.getErrorCode());
-		jsonObject.put("msg", ErrorEnum.E_400.getErrorMsg());
-		JSONObject errorObject = new JSONObject();
-		errorObject.put("errorLocation", e.toString() + "    错误位置:" + errorPosition);
-		jsonObject.put("info", errorObject);
+		Response<String> response = new Response<>();
+//		JSONObject jsonObject = new JSONObject();
+//		jsonObject.put("code", ErrorEnum.E_400.getErrorCode());
+//		jsonObject.put("msg", ErrorEnum.E_400.getErrorMsg());
+//		JSONObject errorObject = new JSONObject();
+//		errorObject.put("errorLocation", e.toString() + "    错误位置:" + errorPosition);
+//		jsonObject.put("info", errorObject);
+		response.setError("系统异常,给您带来不便非常抱歉,请联系系统负责人予以解决");
 		logger.error("异常", e);
-		return jsonObject;
+		return response;
 	}
 
 	/**

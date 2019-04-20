@@ -21,7 +21,7 @@
                     </when>
                     <otherwise>
                         delete_status = 1 and
-                        <if test="courseType != null ">
+                        <if test="courseType != null and courseType != '' ">
                             course_type = #{courseType} and
                         </if>
                     </otherwise>
