@@ -70,7 +70,7 @@ public class CosClassServiceImpl implements CosClassService {
      * @return
      */
     @Override
-    public CosCourses getCourses() {
-        return  CosClassDao.getCourses();
+    public List<CosCourses> getCourses() {
+        return CosClassDao.getCourses();
     }
 }
