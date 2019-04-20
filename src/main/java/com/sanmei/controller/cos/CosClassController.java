@@ -38,7 +38,7 @@ public class CosClassController {
     }
 
     @GetMapping("/getCourses")
-    public CosCourses getCourses() {
+    public List<CosCourses> getCourses() {
         return cosClassService.getCourses();
     }
 
