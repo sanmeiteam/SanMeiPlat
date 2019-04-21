@@ -27,7 +27,8 @@ public class CosClassServiceImpl implements CosClassService {
      */
     @Override
     public List<CosClass> selectCosClass(CosClass CosClass) {
-        return CosClassDao.selectCosClass(CosClass);
+        List<CosClass> CosClassList = CosClassDao.selectCosClass(CosClass);
+        return CosClassList;
     }
 
     /**
@@ -70,6 +71,7 @@ public class CosClassServiceImpl implements CosClassService {
      */
     @Override
     public List<CosCourses> getCourses() {
-        return  CosClassDao.getCourses();
+        List<CosCourses> CosClassList = CosClassDao.getCourses();
+        return CosClassList;
     }
 }
