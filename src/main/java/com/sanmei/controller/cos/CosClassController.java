@@ -38,8 +38,16 @@ public class CosClassController {
     }
 
     @GetMapping("/getCourses")
-    public CosCourses getCourses() {
-        return cosClassService.getCourses();
+    public Response<List<CosCourses>> getCourses() {
+        Response<List<CosCourses>> response = new Response<>();
+        try {
+            List<CosCourses> CosCourses = cosClassService.getCourses();
+            response.setResult(CosCourses);
+        } catch (ArgumentException e) {
+            e.printStackTrace();
+            response.setError("获取课程列表失败！");
+        }
+        return response;
     }
 
     /**

@@ -11,11 +11,15 @@ import java.time.LocalDate;
 public class CosClass implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    private String keywords; //关键字查询
+
     private Long id;
     private String courseId; //课程id
     private String courseName; //课程名称
     private String userId; //用户id
-    private String nickname; //用户id
+    private String username; //用户名
+    private String nickname; //姓名
     private String sex;   //性别
     private String role;   //班内角色
     private String oldMember;      //是否老学员：1是，0否
@@ -27,6 +31,10 @@ public class CosClass implements Serializable {
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
+
+    public String getKeywords() { return keywords;}
+
+    public void setKeywords(String keywords) { this.keywords = keywords;}
 
     public Long getId() {
         return id;
@@ -58,6 +66,14 @@ public class CosClass implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getNickname() {

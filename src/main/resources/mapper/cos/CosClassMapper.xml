@@ -5,6 +5,7 @@
 
     <resultMap id="baseMap" type="com.sanmei.model.cos.CosClass">
         <id column="id" property="id"></id>
+        <result column="keywords" property="keywords"></result>
         <result column="course_id" property="courseId"></result>
         <result column="course_name" property="courseName"></result>
         <result column="user_id" property="userId"></result>
@@ -21,13 +22,24 @@
 
     <select id="selectCosClass" parameterType="com.sanmei.model.cos.CosClass"
             resultMap="baseMap">
-        select cla.id,cla.course_id,cos.course_name,cla.user_id,usr.username
+        select cla.id,cla.course_id,cos.course_name,cla.user_id,usr.username,
                usr.nickname,usr.sex,cla.role,cla.old_member,cla.score,
                cla.delete_status,cla.create_time,cla.update_time
         from cos_class cla
                  left join cos_courses cos on cla.course_id=cos.id
                  left join sys_user usr on cla.user_id=usr.id
-        where cla.delete_status = 1
+        where cla.delete_status = 1 and cla.course_id= #{courseId}
+        <if test="role !='' and role !=null">
+          and cla.role=#{role}
+        </if>
+        <if test="keywords !='' and keywords !=null">
+            and
+            (
+            usr.username like CONCAT('%', #{keywords}, '%') or
+            usr.nickname like CONCAT('%', #{keywords}, '%') or
+            usr.sex like CONCAT('%', #{keywords}, '%')
+            )
+        </if>
     </select>
 
     <!--修改-->
@@ -74,10 +86,11 @@
 
     <select id="getCourses" resultType="com.sanmei.model.cos.CosCourses">
         SELECT
-            id          courseId,
+            id          id,
             course_name courseName
         FROM cos_courses
         WHERE delete_status='1'
+        order by id desc
     </select>
 
 </mapper>
