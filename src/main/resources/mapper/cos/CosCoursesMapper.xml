@@ -25,20 +25,23 @@
         SELECT a.*,b.course_type FROM cos_courses a
         LEFT JOIN cos_course_type b ON a.course_type_id = b.id
         <where>
-            <trim>
+            <trim suffixOverrides="and">
                 <choose>
                     <when test="id != null and id != '' ">
                         id = #{id} and
                     </when>
                     <otherwise>
-                        <if test="courseNumber != null">
+                        <if test="courseNumber != null and courseNumber != '' ">
                             course_number = #{courseNumber} and
                         </if>
-                        <if test="courseName != null">
-                            course_name = #{courseName} and
+                        <if test="courseName != null  and courseName != ''  ">
+                            course_name like concat('%' , #{courseName} , '%') and
                         </if>
-                        <if test="teacher != null">
-                            teacher = #{teacher} and
+                        <if test="teacher != null and teacher != '' ">
+                            teacher like concat('%', #{teacher},'%' )and
+                        </if>
+                        <if test="startTime != null and startTime != '' ">
+                            start_time = #{startTime} and
                         </if>
                     </otherwise>
                 </choose>

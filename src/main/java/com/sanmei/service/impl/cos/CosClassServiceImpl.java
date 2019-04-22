@@ -3,6 +3,7 @@ package com.sanmei.service.impl.cos;
 import com.sanmei.dao.cos.CosClassDao;
 import com.sanmei.model.cos.CosClass;
 import com.sanmei.model.cos.CosCourses;
+import com.sanmei.model.sysUser.SysUser;
 import com.sanmei.service.inf.cos.CosClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,5 +74,16 @@ public class CosClassServiceImpl implements CosClassService {
     public List<CosCourses> getCourses() {
         List<CosCourses> CosClassList = CosClassDao.getCourses();
         return CosClassList;
+    }
+
+    /**
+     *
+     * @param
+     * @return
+     */
+    @Override
+    public List<SysUser> getUsers() {
+        List<SysUser> SysUserList = CosClassDao.getUsers();
+        return SysUserList;
     }
 }

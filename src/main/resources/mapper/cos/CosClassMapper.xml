@@ -33,12 +33,7 @@
           and cla.role=#{role}
         </if>
         <if test="keywords !='' and keywords !=null">
-            and
-            (
-            usr.username like CONCAT('%', #{keywords}, '%') or
-            usr.nickname like CONCAT('%', #{keywords}, '%') or
-            usr.sex like CONCAT('%', #{keywords}, '%')
-            )
+            and CONCAT(usr.username+'|'+usr.nickname+'|'+usr.sex) like CONCAT('%', #{keywords}, '%')
         </if>
     </select>
 
@@ -69,7 +64,7 @@
             #{courseId},
             #{userId},
             #{role},
-            #{old_member},
+            #{oldMember},
             #{score},
             '1'
         )
@@ -89,6 +84,17 @@
             id          id,
             course_name courseName
         FROM cos_courses
+        WHERE delete_status='1'
+        order by id desc
+    </select>
+
+    <select id="getUsers" resultType="com.sanmei.model.sysUser.SysUser">
+        SELECT
+            id          id,
+            username    username,
+            nickname    nickname,
+            sex         sex
+        FROM sys_user
         WHERE delete_status='1'
         order by id desc
     </select>

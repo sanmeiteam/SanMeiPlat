@@ -2,13 +2,14 @@ package com.sanmei.model.cos;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * @description: 课程模型类
  * @author: theYuMiao
  * @date: 2019-04-09 18:20
  */
-public class CosCourses implements Serializable {
+public class CosCourses implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 1L;
     private Long id;
@@ -25,6 +26,57 @@ public class CosCourses implements Serializable {
     private LocalDate createTime;   //创建时间
     private LocalDate updateTime;    //更新时间
     private String courseType; //课程类型
+
+    @Override
+    public String toString() {
+        return "CosCourses{" +
+                "id=" + id +
+                ", courseTypeId='" + courseTypeId + '\'' +
+                ", courseNumber='" + courseNumber + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", teacher='" + teacher + '\'' +
+                ", address='" + address + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", signTeacher='" + signTeacher + '\'' +
+                ", signTel='" + signTel + '\'' +
+                ", organizer='" + organizer + '\'' +
+                ", deleteStatus='" + deleteStatus + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", courseType='" + courseType + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CosCourses)) return false;
+        CosCourses that = (CosCourses) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(courseTypeId, that.courseTypeId) &&
+                Objects.equals(courseNumber, that.courseNumber) &&
+                Objects.equals(courseName, that.courseName) &&
+                Objects.equals(teacher, that.teacher) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(startTime, that.startTime) &&
+                Objects.equals(signTeacher, that.signTeacher) &&
+                Objects.equals(signTel, that.signTel) &&
+                Objects.equals(organizer, that.organizer) &&
+                Objects.equals(deleteStatus, that.deleteStatus) &&
+                Objects.equals(createTime, that.createTime) &&
+                Objects.equals(updateTime, that.updateTime) &&
+                Objects.equals(courseType, that.courseType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, courseTypeId, courseNumber, courseName, teacher, address, startTime, signTeacher, signTel, organizer, deleteStatus, createTime, updateTime, courseType);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
+    }
 
     public String getCourseType() {
         return courseType;

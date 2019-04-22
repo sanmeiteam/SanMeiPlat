@@ -2,6 +2,7 @@ package com.sanmei.service.inf.cos;
 
 import com.sanmei.model.cos.CosClass;
 import com.sanmei.model.cos.CosCourses;
+import com.sanmei.model.sysUser.SysUser;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface CosClassService {
     Integer deleteCosClass(CosClass CosClass);
 
     List<CosCourses> getCourses();
+
+    List<SysUser> getUsers();
 }

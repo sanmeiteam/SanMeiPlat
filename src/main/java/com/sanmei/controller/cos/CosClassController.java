@@ -3,12 +3,12 @@ package com.sanmei.controller.cos;
 import com.sanmei.config.exception.ArgumentException;
 import com.sanmei.model.cos.CosClass;
 import com.sanmei.model.cos.CosCourses;
+import com.sanmei.model.sysUser.SysUser;
 import com.sanmei.service.inf.cos.CosClassService;
 import com.sanmei.util.Response;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 /**
@@ -50,6 +50,19 @@ public class CosClassController {
         return response;
     }
 
+    @GetMapping("/getUsers")
+    public Response<List<SysUser>> getUsers() {
+        Response<List<SysUser>> response = new Response<>();
+        try {
+            List<SysUser> SysUser = cosClassService.getUsers();
+            response.setResult(SysUser);
+        } catch (ArgumentException e) {
+            e.printStackTrace();
+            response.setError("获取人员信息失败！");
+        }
+        return response;
+    }
+
     /**
      * 更新
      * @param CosClass
@@ -74,8 +87,8 @@ public class CosClassController {
      * @param CosClass
      * @return
      */
-    @GetMapping("/addData")
-    public Response<String> addCosClass(CosClass CosClass) {
+    @PostMapping("/addData")
+    public Response<String> addCosClass(@RequestBody CosClass CosClass) {
         Response<String> response = new Response<>();
         try {
             cosClassService.addCosClass(CosClass);
