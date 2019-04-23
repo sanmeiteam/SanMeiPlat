@@ -33,18 +33,21 @@
           and cla.role=#{role}
         </if>
         <if test="keywords !='' and keywords !=null">
-            and CONCAT(usr.username+'|'+usr.nickname+'|'+usr.sex) like CONCAT('%', #{keywords}, '%')
+            and CONCAT(usr.username,'|',usr.nickname,'|',usr.sex) like CONCAT('%', #{keywords}, '%')
         </if>
     </select>
 
     <!--修改-->
     <update id="updateCosClass" parameterType="com.sanmei.model.cos.CosClass">
         update cos_class set
-        course_id = #{courseId},
         user_id = #{userId},
         role = #{role},
-        old_member = #{old_member},
-        score = #{score}
+        <if test="role !='学员'">
+            old_member = '否'
+        </if>
+        <if test="role =='学员'">
+            old_member = #{oldMember}
+        </if>
         <where>
             id = #{id}
         </where>

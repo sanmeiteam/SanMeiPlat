@@ -63,30 +63,14 @@ public class CosClassController {
         return response;
     }
 
-    /**
-     * 更新
-     * @param CosClass
-     * @return
-     */
-    @RequiresPermissions("class:update")
-    @GetMapping("/updateData")
-    public Response<String> updateCosClass(CosClass CosClass) {
-        Response<String> response = new Response<>();
-        try {
-            cosClassService.updateCosClass(CosClass);
-            response.setResult("更新成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.setError("更新失败");
-        }
-        return response;
-    }
+
 
     /**
      * 新增
      * @param CosClass
      * @return
      */
+    @RequiresPermissions("class:add")
     @PostMapping("/addData")
     public Response<String> addCosClass(@RequestBody CosClass CosClass) {
         Response<String> response = new Response<>();
@@ -100,13 +84,35 @@ public class CosClassController {
         return response;
     }
 
+
+    /**
+     * 更新
+     * @param CosClass
+     * @return
+     */
+    @RequiresPermissions("class:update")
+    @PostMapping("/updateData")
+    public Response<String> updateCosClass(@RequestBody CosClass CosClass) {
+        Response<String> response = new Response<>();
+        try {
+            cosClassService.updateCosClass(CosClass);
+            response.setResult("更新成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setError("更新失败");
+        }
+        return response;
+    }
+
+
     /**
      * 删除
      * @param CosClass
      * @return
      */
-    @GetMapping("/deleteData")
-    public Response<String> deleteCosClass(CosClass CosClass) {
+    @RequiresPermissions("class:delete")
+    @PostMapping("/deleteData")
+    public Response<String> deleteCosClass(@RequestBody CosClass CosClass) {
         Response<String> response = new Response<>();
         try {
             cosClassService.deleteCosClass(CosClass);
