@@ -24,112 +24,54 @@
             resultMap="baseMap">
         SELECT a.*,b.course_type FROM cos_courses a
         LEFT JOIN cos_course_type b ON a.course_type_id = b.id
-        <where>
-            <trim suffixOverrides="and">
-                <choose>
-                    <when test="id != null and id != '' ">
-                        id = #{id} and
-                    </when>
-                    <otherwise>
-                        <if test="courseNumber != null and courseNumber != '' ">
-                            course_number = #{courseNumber} and
-                        </if>
-                        <if test="courseName != null  and courseName != ''  ">
-                            course_name like concat('%' , #{courseName} , '%') and
-                        </if>
-                        <if test="teacher != null and teacher != '' ">
-                            teacher like concat('%', #{teacher},'%' )and
-                        </if>
-                        <if test="startTime != null and startTime != '' ">
-                            start_time = #{startTime} and
-                        </if>
-                    </otherwise>
-                </choose>
-            </trim>
-        </where>
+        where a.delete_status = 1
+        <if test="keywords !='' and keywords !=null">
+            and CONCAT(a.course_name,'|',a.teacher,'|',a.organizer,'|',a.address,'|',a.sign_teacher,'|',a.sign_tel) like CONCAT('%', #{keywords}, '%')
+        </if>
+        order by a.id desc
     </select>
 
-    <!--修改&删除都-->
-    <update id="updateCosCourses" parameterType="com.sanmei.model.cos.CosCourses">
-        update cos_courses set
-        <trim suffixOverrides="and">
-            <if test="courseName != null">
-                course_name = #{courseNumber} and
-            </if>
-            <if test="courseNumber != null">
-                course_number = #{courseNumber} and
-            </if>
-            <if test="teacher != null">
-                teacher = #{teacher} and
-            </if>
-            <if test="address != null">
-                address = #{address} and
-            </if>
-            <if test="startTime != null">
-                start_time = #{startTime} and
-            </if>
-            <if test="signTeacher != null ">
-                sign_teacher = #{signTeacher} and
-            </if>
-            <if test="signTel != null">
-                sign_tel = #{signTel} and
-            </if>
-            <if test="organizer != null">
-                organizer = #{organizer} and
-            </if>
-            <if test="deleteStatus != null">
-                delete_status = #{deleteStatus} and
-            </if>
-        </trim>
-        <trim suffixOverrides="and">
-            <where>
-                <choose>
-                    <when test="id != null">
-                        id = #{id} and
-                    </when>
-                    <otherwise>
-                        <if test="courseName != null">
-                            course_name = #{courseNumber} and
-                        </if>
-                        <if test="courseNumber != null">
-                            course_number = #{courseNumber} and
-                        </if>
-                    </otherwise>
-                </choose>
-            </where>
-        </trim>
-    </update>
+    <select id="selectCosCourseType" resultType="com.sanmei.model.cos.CosCourseType">
+        SELECT
+            id          id,
+            course_type courseType
+        FROM cos_course_type
+        WHERE delete_status='1'
+        order by id
+    </select>
 
-    <insert id="saveCosCourses" parameterType="com.sanmei.model.cos.CosCourses">
+    <insert id="addCosCourse" parameterType="com.sanmei.model.cos.CosCourses">
         insert into cos_courses
-        (course_type_id,
-        course_number,
-        course_name,
-        teacher,
-        address,
-        start_time,
-        sign_teacher,
-        sign_tel,
-        organizer,
-        delete_status,
-        create_time,
-        update_time
+        (course_type_id,course_number,course_name,teacher,
+        address,start_time,sign_teacher,sign_tel,organizer,delete_status
         )
         values
         (
-        select id from cos_course_type where course_type = #{courseType},
-        #{courseNumber},
-        #{courseName},
-        #{teacher},
-        #{address},
-        #{startTime},
-        #{signTeacher},
-        #{signTel},
-        #{organizer},
-        #{deleteStatus},
-        #{createTime},
-        #{updateTime}
+        #{courseTypeId},#{courseNumber},#{courseName},#{teacher},
+        #{address},#{startTime},#{signTeacher},#{signTel},#{organizer},'1'
         )
     </insert>
 
+    <!--修改-->
+    <update id="updateCosCourses" parameterType="com.sanmei.model.cos.CosCourses">
+        update cos_courses
+        set course_type_id=#{courseTypeId},
+            course_number=#{courseNumber},
+            course_name=#{courseName},
+            teacher=#{teacher},
+            address=#{address},
+            start_time=#{startTime},
+            sign_teacher=#{signTeacher},
+            sign_tel=#{signTel},
+            organizer=#{organizer}
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <!--删除-->
+    <update id="deleteCosCourses" parameterType="com.sanmei.model.cos.CosCourses">
+        update cos_courses
+        set delete_status='2'
+        where id=#{id}
+    </update>
 </mapper>

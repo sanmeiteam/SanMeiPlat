@@ -1,6 +1,7 @@
 package com.sanmei.service.impl.cos;
 
 import com.sanmei.dao.cos.CosCoursesDao;
+import com.sanmei.model.cos.CosCourseType;
 import com.sanmei.model.cos.CosCourses;
 import com.sanmei.service.inf.cos.CosCoursesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,24 @@ public class CosCoursesServiceImpl implements CosCoursesService {
         return cosCoursesDao.selectCosCourses(cosCourses);
     }
 
+    @Override
+    public List<CosCourseType> getCourseType() {
+        return cosCoursesDao.selectCosCourseType();
+    }
+
     /**
-     * 更新方法|| 删除方法
+     * 新增方法
+     * @param cosCourses
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Integer addCosCourse(CosCourses cosCourses) {
+        return cosCoursesDao.addCosCourse(cosCourses);
+    }
+
+    /**
+     * 更新方法
      * @param cosCourses
      * @return
      */
@@ -43,13 +60,16 @@ public class CosCoursesServiceImpl implements CosCoursesService {
     }
 
     /**
-     * 新增方法
+     * 删除方法
      * @param cosCourses
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Integer saveCosCourses(CosCourses cosCourses) {
-        return cosCoursesDao.saveCosCourses(cosCourses);
+    public Integer deleteCosCourses(CosCourses cosCourses) {
+        return cosCoursesDao.deleteCosCourses(cosCourses);
+
     }
+
+
 }

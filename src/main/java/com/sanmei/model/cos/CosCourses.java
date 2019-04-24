@@ -12,6 +12,9 @@ import java.util.Objects;
 public class CosCourses implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 1L;
+
+    private String keywords; //关键字查询
+
     private Long id;
     private String courseTypeId; //课程类型id
     private String courseNumber; //课程期数
@@ -27,67 +30,16 @@ public class CosCourses implements Serializable, Cloneable {
     private LocalDate updateTime;    //更新时间
     private String courseType; //课程类型
 
-    @Override
-    public String toString() {
-        return "CosCourses{" +
-                "id=" + id +
-                ", courseTypeId='" + courseTypeId + '\'' +
-                ", courseNumber='" + courseNumber + '\'' +
-                ", courseName='" + courseName + '\'' +
-                ", teacher='" + teacher + '\'' +
-                ", address='" + address + '\'' +
-                ", startTime='" + startTime + '\'' +
-                ", signTeacher='" + signTeacher + '\'' +
-                ", signTel='" + signTel + '\'' +
-                ", organizer='" + organizer + '\'' +
-                ", deleteStatus='" + deleteStatus + '\'' +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", courseType='" + courseType + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CosCourses)) return false;
-        CosCourses that = (CosCourses) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(courseTypeId, that.courseTypeId) &&
-                Objects.equals(courseNumber, that.courseNumber) &&
-                Objects.equals(courseName, that.courseName) &&
-                Objects.equals(teacher, that.teacher) &&
-                Objects.equals(address, that.address) &&
-                Objects.equals(startTime, that.startTime) &&
-                Objects.equals(signTeacher, that.signTeacher) &&
-                Objects.equals(signTel, that.signTel) &&
-                Objects.equals(organizer, that.organizer) &&
-                Objects.equals(deleteStatus, that.deleteStatus) &&
-                Objects.equals(createTime, that.createTime) &&
-                Objects.equals(updateTime, that.updateTime) &&
-                Objects.equals(courseType, that.courseType);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, courseTypeId, courseNumber, courseName, teacher, address, startTime, signTeacher, signTel, organizer, deleteStatus, createTime, updateTime, courseType);
-    }
-
-    @Override
-    public Object clone() throws CloneNotSupportedException{
-        return super.clone();
-    }
-
-    public String getCourseType() {
-        return courseType;
-    }
-
-    public void setCourseType(String courseType) {
-        this.courseType = courseType;
-    }
-
     public static long getSerialVersionUID() {
         return serialVersionUID;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 
     public Long getId() {
@@ -192,5 +144,13 @@ public class CosCourses implements Serializable, Cloneable {
 
     public void setUpdateTime(LocalDate updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getCourseType() {
+        return courseType;
+    }
+
+    public void setCourseType(String courseType) {
+        this.courseType = courseType;
     }
 }

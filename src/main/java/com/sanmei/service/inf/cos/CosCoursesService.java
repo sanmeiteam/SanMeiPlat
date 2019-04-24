@@ -1,5 +1,6 @@
 package com.sanmei.service.inf.cos;
 
+import com.sanmei.model.cos.CosCourseType;
 import com.sanmei.model.cos.CosCourses;
 import java.util.List;
 
@@ -17,8 +18,11 @@ public interface CosCoursesService {
      */
     List<CosCourses> selectCosCourses(CosCourses cosCourses);
 
+    Integer addCosCourse(CosCourses cosCourses);
+
     Integer updateCosCourses(CosCourses cosCourses);
 
-    Integer saveCosCourses(CosCourses cosCourses);
+    Integer deleteCosCourses(CosCourses cosCourses);
 
+    List<CosCourseType> getCourseType();
 }
