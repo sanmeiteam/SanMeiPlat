@@ -4,6 +4,8 @@ import com.sanmei.dao.cos.CosCoursesDao;
 import com.sanmei.model.cos.CosCourseType;
 import com.sanmei.model.cos.CosCourses;
 import com.sanmei.service.inf.cos.CosCoursesService;
+import com.sanmei.util.CommonUtil;
+import com.sanmei.util.constants.ErrorEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +46,10 @@ public class CosCoursesServiceImpl implements CosCoursesService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer addCosCourse(CosCourses cosCourses) {
+        int exist = cosCoursesDao.queryExistCourse(cosCourses);
+        if (exist > 0) {
+            return -1;
+        }
         return cosCoursesDao.addCosCourse(cosCourses);
     }
 

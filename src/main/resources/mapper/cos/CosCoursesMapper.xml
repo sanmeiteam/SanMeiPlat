@@ -40,6 +40,13 @@
         order by id
     </select>
 
+    <select id="queryExistCourse" parameterType="com.sanmei.model.cos.CosCourses" resultType="int">
+        select count(0)
+        from cos_courses
+        WHERE course_name=#{courseName}
+          AND delete_status='1';
+    </select>
+
     <insert id="addCosCourse" parameterType="com.sanmei.model.cos.CosCourses">
         insert into cos_courses
         (course_type_id,course_number,course_name,teacher,

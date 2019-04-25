@@ -66,11 +66,16 @@ public class CosCoursesController {
     public Response<String> addCosCourse(@RequestBody CosCourses cosCourses) {
         Response<String> response = new Response<>();
         try {
-            cosCoursesService.addCosCourse(cosCourses);
-            response.setResult("更新成功");
+            int rtnValue=cosCoursesService.addCosCourse(cosCourses);
+            if (rtnValue==-1) {
+                response.setError("该课程已经存在");
+            }
+            else {
+                response.setResult("添加成功");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            response.setError("更新失败");
+            response.setError("添加失败");
         }
         return response;
     }

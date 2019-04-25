@@ -27,4 +27,6 @@ public interface CosCoursesDao {
     Integer deleteCosCourses(CosCourses cosCourses);
 
     List<CosCourseType> selectCosCourseType();
+
+    Integer queryExistCourse(CosCourses cosCourses);
 }

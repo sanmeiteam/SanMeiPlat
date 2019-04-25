@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sanmei.dao.cos.CosCourseScheduleDao">
+
+    <resultMap id="baseMap" type="com.sanmei.model.cos.CosCourseSchedule">
+        <id column="id" property="id"></id>
+        <result column="keywords" property="keywords"></result>
+        <result column="course_id" property="courseId"></result>
+        <result column="course_name" property="courseName"></result>
+        <result column="schedule_no" property="scheduleNo"></result>
+        <result column="schedule_name" property="scheduleName"></result>
+        <result column="schedule_date" property="scheduleDate"></result>
+        <result column="period" property="period"></result>
+        <result column="start_time" property="startTime"></result>
+        <result column="homework_words" property="homeworkWords"></result>
+        <result column="last_date" property="lastDate"></result>
+        <result column="sign_score" property="signScore"></result>
+        <result column="homework_time_score" property="homeworkTimeScore"></result>
+        <result column="homework_words_score" property="homeworkWordsScore"></result>
+        <result column="review_score" property="reviewScore"></result>
+        <result column="delete_status" property="deleteStatus"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+    </resultMap>
+
+    <select id="selectCosCourseSchedule" parameterType="com.sanmei.model.cos.CosCourseSchedule"
+            resultMap="baseMap">
+        select a.*,b.course_name
+        from cos_schedule a
+                 left join cos_courses b on a.course_id=b.id
+        where a.delete_status = 1 and a.course_id= #{courseId}
+        <if test="keywords !='' and keywords !=null">
+            and CONCAT(a.schedule_name,'|',a.period) like CONCAT('%', #{keywords}, '%')
+        </if>
+    </select>
+
+
+    <!--新增-->
+    <insert id="addCosCourseSchedule" parameterType="com.sanmei.model.cos.CosCourseSchedule">
+        insert into cos_schedule
+        (course_id,
+         schedule_no,
+         schedule_name,
+         schedule_date,
+         period,
+         start_time,
+         homework_words,
+         last_date,
+         sign_score,
+         homework_time_score,
+         homework_words_score,
+         review_score,
+         delete_status)
+        values
+        (
+            #{courseId},
+            #{scheduleNo},
+            #{scheduleName},
+            #{scheduleDate},
+            #{period},
+            #{startTime},
+            #{homeworkWords},
+            #{lastDate},
+            #{signScore},
+            #{homeworkTimeScore},
+            #{homeworkWordsScore},
+            #{reviewScore},
+            '1'
+        )
+    </insert>
+
+    <!--修改-->
+    <update id="updateCosCourseSchedule" parameterType="com.sanmei.model.cos.CosCourseSchedule">
+        update cos_schedule set
+        course_id=#{courseId},
+        schedule_no=#{scheduleNo},
+        schedule_name=#{scheduleName},
+        schedule_date=#{scheduleDate},
+        period=#{period},
+        start_time=#{startTime},
+        homework_words=#{homeworkWords},
+        last_date=#{lastDate},
+        sign_score=#{signScore},
+        homework_time_score=#{homeworkTimeScore},
+        homework_words_score=#{homeworkWordsScore},
+        review_score=#{reviewScore}
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="queryExistCourseSchedule" parameterType="com.sanmei.model.cos.CosCourseSchedule" resultType="int">
+        select count(0)
+        from cos_schedule
+        WHERE course_id=#{courseId} and schedule_name=#{scheduleName} and delete_status='1';
+    </select>
+
+    <!--逻辑删除-->
+    <update id="deleteCosCourseSchedule" parameterType="com.sanmei.model.cos.CosCourseSchedule">
+        update cos_schedule set
+        delete_status = '2'
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+</mapper>
