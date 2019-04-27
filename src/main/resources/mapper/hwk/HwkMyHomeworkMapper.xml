@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sanmei.dao.hwk.HwkMyHomeworkDao">
+
+    <resultMap id="baseMap" type="com.sanmei.model.hwk.HwkMyHomework">
+        <id column="id" property="id"></id>
+        <result column="data_control" property="dataControl"></result>
+        <result column="course_id" property="courseId"></result>
+        <result column="course_name" property="courseName"></result>
+        <result column="schedule_id" property="scheduleId"></result>
+        <result column="schedule_no" property="scheduleNo"></result>
+        <result column="schedule_name" property="scheduleName"></result>
+        <result column="schedule_date" property="scheduleDate"></result>
+        <result column="last_date" property="lastDate"></result>
+
+        <result column="user_id" property="hwkUserId"></result>
+        <result column="username" property="userName"></result>
+        <result column="nickname" property="nickName"></result>
+
+        <result column="title" property="title"></result>
+        <result column="content" property="content"></result>
+        <result column="homework_words" property="homeworkWords"></result>
+        <result column="secret" property="secret"></result>
+        <result column="comment" property="comment"></result>
+        <result column="review_score" property="reviewScore"></result>
+        <result column="review_time" property="reviewTime"></result>
+
+        <result column="delete_status" property="deleteStatus"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+    </resultMap>
+
+    <select id="selectHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework"
+            resultMap="baseMap">
+        select  a.course_id,d.course_name,a.id as schedule_id,a.schedule_no,a.schedule_name,a.schedule_date,a.last_date,
+        b.id,b.user_id,c.username,c.nickname,
+        b.title,b.content,b.homework_words,b.secret,b.comment,b.review_score,b.review_time,
+        b.delete_status,b.update_time,b.create_time
+        from cos_schedule a
+        left join hwk_homework b on a.id=b.schedule_id and b.user_id= #{userId} and b.delete_status='1'
+        left join sys_user c on b.user_id=c.id
+        left join cos_courses d on a.course_id=d.id
+        where a.delete_status = 1 and a.course_id= #{courseId}
+        <if test="keywords !='' and keywords !=null">
+            and b.title like CONCAT('%', #{keywords}, '%')
+        </if>
+        order by schedule_no
+    </select>
+
+    <select id="getDataControl" parameterType="com.sanmei.model.hwk.HwkMyHomework" resultMap="baseMap">
+        select min(data_control) as data_control from sys_role
+        where id in (select role_id from sys_user where id=#{userId})
+    </select>
+    <!--新增-->
+    <insert id="addHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework">
+        <choose>
+        <when test="id !='' and id !=null">
+            update hwk_homework
+            set title=#{title},
+                content=#{content},
+                secret=#{secret}
+            where id=#{id}
+        </when>
+        <otherwise>
+            insert into hwk_homework (schedule_id,user_id,title,content,homework_words,secret)
+            values (scheduleId,userId,title,content,homeworkWords,secret)
+        </otherwise>
+        </choose>
+
+    </insert>
+
+    <!--修改-->
+    <update id="updateHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework">
+        <choose>
+            <when test="id !='' and id !=null">
+                update hwk_homework
+                set title=#{title},
+                content=#{content},
+                homework_words=#{homeworkWords},
+                secret=#{secret}
+                where id=#{id}
+            </when>
+            <otherwise>
+                insert into hwk_homework (schedule_id,user_id,title,content,homework_words,secret,delete_status)
+                values (#{scheduleId},#{userId},#{title},#{content},#{homeworkWords},#{secret},'1')
+            </otherwise>
+        </choose>
+    </update>
+
+    <!--逻辑删除-->
+    <update id="deleteHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework">
+        update cos_schedule set
+        delete_status = '2'
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <!--判断是否存在-->
+    <select id="queryExistMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework" resultType="int">
+        select count(0)
+        from cos_schedule
+        WHERE course_id=#{courseId} and schedule_name=#{scheduleName} and delete_status='1';
+    </select>
+</mapper>
