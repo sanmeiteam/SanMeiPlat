@@ -38,6 +38,12 @@ public class CosCoursesServiceImpl implements CosCoursesService {
         return cosCoursesDao.selectCosCourseType();
     }
 
+    @Override
+    public List<CosCourses> getCourses(CosCourses cosCourses) {
+        List<CosCourses> CosClassList = cosCoursesDao.getCourses(cosCourses);
+        return CosClassList;
+    }
+
     /**
      * 新增方法
      * @param cosCourses

@@ -25,4 +25,6 @@ public interface CosCoursesService {
     Integer deleteCosCourses(CosCourses cosCourses);
 
     List<CosCourseType> getCourseType();
+
+    List<CosCourses> getCourses(CosCourses cosCourses);
 }

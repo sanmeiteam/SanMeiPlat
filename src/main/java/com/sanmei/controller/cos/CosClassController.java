@@ -37,19 +37,6 @@ public class CosClassController {
         return response;
     }
 
-    @GetMapping("/getCourses")
-    public Response<List<CosCourses>> getCourses() {
-        Response<List<CosCourses>> response = new Response<>();
-        try {
-            List<CosCourses> CosCourses = cosClassService.getCourses();
-            response.setResult(CosCourses);
-        } catch (ArgumentException e) {
-            e.printStackTrace();
-            response.setError("获取课程列表失败！");
-        }
-        return response;
-    }
-
     @GetMapping("/getUsers")
     public Response<List<SysUser>> getUsers() {
         Response<List<SysUser>> response = new Response<>();

@@ -28,7 +28,5 @@ public interface CosClassDao {
 
     Integer deleteCosClass(CosClass CosClass);
 
-    List<CosCourses> getCourses();
-
     List<SysUser> getUsers();
 }

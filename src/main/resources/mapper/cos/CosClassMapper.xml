@@ -82,15 +82,6 @@
         </where>
     </update>
 
-    <select id="getCourses" resultType="com.sanmei.model.cos.CosCourses">
-        SELECT
-            id          id,
-            course_name courseName
-        FROM cos_courses
-        WHERE delete_status='1'
-        order by id desc
-    </select>
-
     <select id="getUsers" resultType="com.sanmei.model.sysUser.SysUser">
         SELECT
             id          id,

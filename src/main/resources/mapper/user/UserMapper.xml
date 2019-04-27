@@ -110,6 +110,7 @@
     <resultMap id="roleMap" type="com.sanmei.model.One2Many">
         <id column="roleId" property="roleId"/>
         <result column="roleName" property="roleName"/>
+        <result column="dataControl" property="dataControl"/>
         <collection property="users" ofType="com.alibaba.fastjson.JSONObject">
             <id column="userId" property="userId"/>
             <result column="nickname" property="nickname"/>
@@ -127,6 +128,7 @@
         SELECT
             r.id              roleId,
             r.role_name       roleName,
+            r.data_control    dataControl,
             u.id              userId,
             u.nickname        nickname,
             p.id              permissionId,

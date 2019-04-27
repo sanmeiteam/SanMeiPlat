@@ -65,16 +65,6 @@ public class CosClassServiceImpl implements CosClassService {
         return CosClassDao.deleteCosClass(CosClass);
     }
 
-    /**
-     *
-     * @param
-     * @return
-     */
-    @Override
-    public List<CosCourses> getCourses() {
-        List<CosCourses> CosClassList = CosClassDao.getCourses();
-        return CosClassList;
-    }
 
     /**
      *

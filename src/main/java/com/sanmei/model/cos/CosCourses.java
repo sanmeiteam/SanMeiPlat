@@ -14,6 +14,7 @@ public class CosCourses implements Serializable, Cloneable {
     private static final long serialVersionUID = 1L;
 
     private String keywords; //关键字查询
+    private String userId; //当前登录用户
 
     private Long id;
     private String courseTypeId; //课程类型id
@@ -40,6 +41,14 @@ public class CosCourses implements Serializable, Cloneable {
 
     public void setKeywords(String keywords) {
         this.keywords = keywords;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Long getId() {

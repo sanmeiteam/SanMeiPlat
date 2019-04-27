@@ -9,6 +9,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ public class CosCoursesController {
 
     /**
      * 查询
+     *
      * @param cosCourses
      * @return
      */
@@ -57,7 +59,28 @@ public class CosCoursesController {
     }
 
     /**
+     * 获取选择课程下拉列表
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("/getCourses")
+    public Response<List<CosCourses>> getCourses(CosCourses cosCourses ) {
+
+        Response<List<CosCourses>> response = new Response<>();
+        try {
+            List<CosCourses> CosCourses = cosCoursesService.getCourses(cosCourses);
+            response.setResult(CosCourses);
+        } catch (ArgumentException e) {
+            e.printStackTrace();
+            response.setError("获取课程列表失败！");
+        }
+        return response;
+    }
+
+    /**
      * 新增
+     *
      * @param cosCourses
      * @return
      */
@@ -66,11 +89,10 @@ public class CosCoursesController {
     public Response<String> addCosCourse(@RequestBody CosCourses cosCourses) {
         Response<String> response = new Response<>();
         try {
-            int rtnValue=cosCoursesService.addCosCourse(cosCourses);
-            if (rtnValue==-1) {
+            int rtnValue = cosCoursesService.addCosCourse(cosCourses);
+            if (rtnValue == -1) {
                 response.setError("该课程已经存在");
-            }
-            else {
+            } else {
                 response.setResult("添加成功");
             }
         } catch (Exception e) {
@@ -82,6 +104,7 @@ public class CosCoursesController {
 
     /**
      * 更新
+     *
      * @param cosCourses
      * @return
      */
@@ -101,6 +124,7 @@ public class CosCoursesController {
 
     /**
      * 删除
+     *
      * @param cosCourses
      * @return
      */
@@ -117,4 +141,6 @@ public class CosCoursesController {
         }
         return response;
     }
+
+
 }
