@@ -3,6 +3,7 @@ package com.sanmei.controller.hwk;
 import com.sanmei.config.exception.ArgumentException;
 import com.sanmei.model.cos.CosCourseSchedule;
 import com.sanmei.model.hwk.HwkMyHomework;
+import com.sanmei.model.sysUser.SysUser;
 import com.sanmei.service.inf.hwk.HwkMyHomeworkService;
 import com.sanmei.util.Response;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -22,9 +23,13 @@ public class HwkMyHomeworkController {
 
     @Autowired
     private HwkMyHomeworkService hwkMyHomeworkService;
-
+    /**
+     * 根据个人获取心得  用于我的作业
+     * @param HwkMyHomework
+     * @return
+     */
     @RequiresPermissions("class:list")
-    @GetMapping("/list")
+    @GetMapping("/hwkList")
     public Response<List<HwkMyHomework>> selectHwkMyHomework(HwkMyHomework HwkMyHomework) {
         Response<List<HwkMyHomework>> response = new Response<>();
         try {
@@ -37,43 +42,76 @@ public class HwkMyHomeworkController {
         return response;
     }
 
-
     /**
-     * 新增
+     * 根据课时或学员获取作业  用于批阅
      * @param HwkMyHomework
      * @return
      */
-    @RequiresPermissions("class:add")
-    @PostMapping("/addData")
-    public Response<String> addHwkMyHomework(@RequestBody HwkMyHomework HwkMyHomework) {
-        Response<String> response = new Response<>();
+    @RequiresPermissions("class:list")
+    @GetMapping("/remarkList")
+    public Response<List<HwkMyHomework>> selectHwkRemarkHomework(HwkMyHomework HwkMyHomework) {
+        Response<List<HwkMyHomework>> response = new Response<>();
         try {
-            int rtnValue=hwkMyHomeworkService.addHwkMyHomework(HwkMyHomework);
-            if (rtnValue==-1) {
-                response.setError("该课程已经存在");
-            }
-            else {
-                response.setResult("添加成功");
-            }
-        } catch (Exception e) {
+            List<HwkMyHomework> HwkMyHomeworkList = hwkMyHomeworkService.selectHwkRemarkHomework(HwkMyHomework);
+            response.setResult(HwkMyHomeworkList);
+        } catch (ArgumentException e) {
             e.printStackTrace();
-            response.setError("更新失败");
+            response.setError("查询失败！");
         }
         return response;
     }
 
+    /**
+     * 获取选择 课时 下拉列表
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("/getCourseSchedule")
+    public Response<List<CosCourseSchedule>> getCourseSchedule(HwkMyHomework HwkMyHomework ) {
+
+        Response<List<CosCourseSchedule>> response = new Response<>();
+        try {
+            List<CosCourseSchedule> CosCourseSchedule = hwkMyHomeworkService.getCourseSchedule(HwkMyHomework);
+            response.setResult(CosCourseSchedule);
+        } catch (ArgumentException e) {
+            e.printStackTrace();
+            response.setError("获取课时列表失败！");
+        }
+        return response;
+    }
 
     /**
-     * 更新
+     * 获取选择班内人员 下拉列表
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("/getClassUsers")
+    public Response<List<SysUser>> getClassUsers(HwkMyHomework HwkMyHomework ) {
+
+        Response<List<SysUser>> response = new Response<>();
+        try {
+            List<SysUser> SysUser = hwkMyHomeworkService.getClassUsers(HwkMyHomework);
+            response.setResult(SysUser);
+        } catch (ArgumentException e) {
+            e.printStackTrace();
+            response.setError("获取学员列表失败！");
+        }
+        return response;
+    }
+
+    /**
+     * 上传心得
      * @param HwkMyHomework
      * @return
      */
     @RequiresPermissions("class:update")
-    @PostMapping("/updateData")
-    public Response<String> updateHwkMyHomework(@RequestBody HwkMyHomework HwkMyHomework) {
+    @PostMapping("/uploadData")
+    public Response<String> uploadHwkMyHomework(@RequestBody HwkMyHomework HwkMyHomework) {
         Response<String> response = new Response<>();
         try {
-            hwkMyHomeworkService.updateHwkMyHomework(HwkMyHomework);
+            hwkMyHomeworkService.uploadHwkMyHomework(HwkMyHomework);
             response.setResult("更新成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,16 +122,16 @@ public class HwkMyHomeworkController {
 
 
     /**
-     * 删除
+     * 心得评阅
      * @param HwkMyHomework
      * @return
      */
     @RequiresPermissions("class:delete")
-    @PostMapping("/deleteData")
-    public Response<String> deleteHwkMyHomework(@RequestBody HwkMyHomework HwkMyHomework) {
+    @PostMapping("/remarkData")
+    public Response<String> remarkHwkMyHomework(@RequestBody HwkMyHomework HwkMyHomework) {
         Response<String> response = new Response<>();
         try {
-            hwkMyHomeworkService.deleteHwkMyHomework(HwkMyHomework);
+            hwkMyHomeworkService.remarkHwkMyHomework(HwkMyHomework);
             response.setResult("删除成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,6 +139,5 @@ public class HwkMyHomeworkController {
         }
         return response;
     }
-
 
 }

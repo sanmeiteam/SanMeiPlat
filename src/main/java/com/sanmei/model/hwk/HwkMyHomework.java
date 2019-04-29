@@ -14,6 +14,8 @@ public class HwkMyHomework implements Serializable {
     private String keywords; //关键字查询
     private String userId; //登录用户ID
     private String dataControl; //数据控制
+    private String tempUserId; //批阅时，按学员选择  学员ID
+    private String tempScheduleId; //批阅时，按课时选择  课时ID
 
     private Long id;
     private String courseId; //课程id
@@ -31,8 +33,11 @@ public class HwkMyHomework implements Serializable {
     private Integer homeworkWords;      //作业字数
     private String secret;      //保密程度 公开程度
     private String comment;      //讲师评语
+    private String showComment;      //讲师评语 用于列表显示  显示不开...
     private Integer reviewScore;      //讲师评阅学分
     private String reviewTime;      //讲师评阅时间
+    private String reviewTeacherId;      //讲师评阅时间
+    private String isReview;      //是否评阅
     private String deleteStatus; //是否有效
     private LocalDate createTime;   //创建时间
     private LocalDate updateTime;    //更新时间
@@ -63,6 +68,22 @@ public class HwkMyHomework implements Serializable {
 
     public void setDataControl(String dataControl) {
         this.dataControl = dataControl;
+    }
+
+    public String getTempUserId() {
+        return tempUserId;
+    }
+
+    public void setTempUserId(String tempUserId) {
+        this.tempUserId = tempUserId;
+    }
+
+    public String getTempScheduleId() {
+        return tempScheduleId;
+    }
+
+    public void setTempScheduleId(String tempScheduleId) {
+        this.tempScheduleId = tempScheduleId;
     }
 
     public Long getId() {
@@ -193,6 +214,14 @@ public class HwkMyHomework implements Serializable {
         this.comment = comment;
     }
 
+    public String getShowComment() {
+        return showComment;
+    }
+
+    public void setShowComment(String showComment) {
+        this.showComment = showComment;
+    }
+
     public Integer getReviewScore() {
         return reviewScore;
     }
@@ -207,6 +236,22 @@ public class HwkMyHomework implements Serializable {
 
     public void setReviewTime(String reviewTime) {
         this.reviewTime = reviewTime;
+    }
+
+    public String getReviewTeacherId() {
+        return reviewTeacherId;
+    }
+
+    public void setReviewTeacherId(String reviewTeacherId) {
+        this.reviewTeacherId = reviewTeacherId;
+    }
+
+    public String getIsReview() {
+        return isReview;
+    }
+
+    public void setIsReview(String isReview) {
+        this.isReview = isReview;
     }
 
     public String getDeleteStatus() {

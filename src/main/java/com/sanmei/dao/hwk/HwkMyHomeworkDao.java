@@ -1,6 +1,8 @@
 package com.sanmei.dao.hwk;
 
+import com.sanmei.model.cos.CosCourseSchedule;
 import com.sanmei.model.hwk.HwkMyHomework;
+import com.sanmei.model.sysUser.SysUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -21,15 +23,15 @@ public interface HwkMyHomeworkDao {
     @Transactional
     List<HwkMyHomework> selectHwkMyHomework(HwkMyHomework hwkMyHomework);
 
-    List<HwkMyHomework> selectHwkMyHomeworkByUserId(HwkMyHomework hwkMyHomework);
+    List<HwkMyHomework> selectHwkRemarkHomework(HwkMyHomework hwkMyHomework);
 
-    Integer addHwkMyHomework(HwkMyHomework hwkMyHomework);
+    //返回人员
+    List<SysUser> getClassUsers(HwkMyHomework hwkMyHomework);
 
-    Integer updateHwkMyHomework(HwkMyHomework hwkMyHomework);
+    //返回课时
+    List<CosCourseSchedule> getCourseSchedule(HwkMyHomework hwkMyHomework);
 
-    Integer deleteHwkMyHomework(HwkMyHomework hwkMyHomework);
+    Integer uploadHwkMyHomework(HwkMyHomework hwkMyHomework);
 
-    Integer queryExistMyHomework(HwkMyHomework hwkMyHomework);
-
-    List<HwkMyHomework> getDataControl(HwkMyHomework hwkMyHomework);
+    Integer remarkHwkMyHomework(HwkMyHomework hwkMyHomework);
 }

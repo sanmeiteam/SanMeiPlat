@@ -25,17 +25,21 @@
         <result column="comment" property="comment"></result>
         <result column="review_score" property="reviewScore"></result>
         <result column="review_time" property="reviewTime"></result>
+        <result column="review_teacher_id" property="reviewTeacherId"></result>
 
         <result column="delete_status" property="deleteStatus"></result>
         <result column="create_time" property="createTime"></result>
         <result column="update_time" property="updateTime"></result>
     </resultMap>
 
+    <!--学员上传心得列表  用于我的作业-->
     <select id="selectHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework"
             resultMap="baseMap">
         select  a.course_id,d.course_name,a.id as schedule_id,a.schedule_no,a.schedule_name,a.schedule_date,a.last_date,
         b.id,b.user_id,c.username,c.nickname,
-        b.title,b.content,b.homework_words,b.secret,b.comment,b.review_score,b.review_time,
+        b.title,b.content,b.homework_words,b.secret,
+        (CASE WHEN char_length(b.comment)>6 THEN concat(substring(b.comment,1,6),'...') ELSE b.comment END) as showComment,
+        b.comment,b.review_score,b.review_time,b.review_teacher_id,(CASE WHEN b.review_teacher_id>'0' THEN '1' ELSE '0' END) as isReview,
         b.delete_status,b.update_time,b.create_time
         from cos_schedule a
         left join hwk_homework b on a.id=b.schedule_id and b.user_id= #{userId} and b.delete_status='1'
@@ -48,59 +52,92 @@
         order by schedule_no
     </select>
 
-    <select id="getDataControl" parameterType="com.sanmei.model.hwk.HwkMyHomework" resultMap="baseMap">
-        select min(data_control) as data_control from sys_role
-        where id in (select role_id from sys_user where id=#{userId})
+    <!-- 讲师评阅列表  用于作业评阅-->
+    <select id="selectHwkRemarkHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework"
+            resultMap="baseMap">
+        select  a.course_id,d.course_name,a.id as schedule_id,a.schedule_no,a.schedule_name,a.schedule_date,a.last_date,
+        b.id,b.user_id,c.username,c.nickname,
+        b.title,b.content,b.homework_words,b.secret,
+        (CASE WHEN char_length(b.comment)>6 THEN concat(substring(b.comment,1,6),'...') ELSE b.comment END) as showComment,
+        b.comment,b.review_score,b.review_time,b.review_teacher_id,
+        b.delete_status,b.update_time,b.create_time
+        from cos_schedule a
+        right join hwk_homework b on a.id=b.schedule_id and b.delete_status='1'
+        left join sys_user c on b.user_id=c.id
+        left join cos_courses d on a.course_id=d.id
+        where a.delete_status = 1 and a.course_id= #{courseId}
+        <if test="tempUserId !='' and tempUserId !=null">
+            and b.user_id=#{tempUserId}
+        </if>
+        <if test="tempScheduleId !='' and tempScheduleId !=null">
+            and a.id=#{tempScheduleId}
+        </if>
+        <if test="keywords !='' and keywords !=null">
+            and b.title like CONCAT('%', #{keywords}, '%')
+        </if>
+        order by a.schedule_no,b.update_time
     </select>
-    <!--新增-->
-    <insert id="addHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework">
-        <choose>
-        <when test="id !='' and id !=null">
-            update hwk_homework
-            set title=#{title},
-                content=#{content},
-                secret=#{secret}
-            where id=#{id}
-        </when>
-        <otherwise>
-            insert into hwk_homework (schedule_id,user_id,title,content,homework_words,secret)
-            values (scheduleId,userId,title,content,homeworkWords,secret)
-        </otherwise>
-        </choose>
 
-    </insert>
-
-    <!--修改-->
-    <update id="updateHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework">
+    <!--上传心得-->
+    <update id="uploadHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework">
         <choose>
             <when test="id !='' and id !=null">
                 update hwk_homework
                 set title=#{title},
                 content=#{content},
                 homework_words=#{homeworkWords},
-                secret=#{secret}
+                secret=#{secret}，
+                update_time=CURRENT_TIMESTAMP
                 where id=#{id}
             </when>
             <otherwise>
-                insert into hwk_homework (schedule_id,user_id,title,content,homework_words,secret,delete_status)
-                values (#{scheduleId},#{userId},#{title},#{content},#{homeworkWords},#{secret},'1')
+                insert into hwk_homework
+                  (schedule_id,user_id,
+                   title,content,homework_words,secret,
+                   delete_status,create_time,update_time)
+                values
+                (#{scheduleId},#{userId},#{title},#{content},#{homeworkWords},#{secret},'1',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)
             </otherwise>
         </choose>
     </update>
 
-    <!--逻辑删除-->
-    <update id="deleteHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework">
-        update cos_schedule set
-        delete_status = '2'
-        <where>
-            id = #{id}
-        </where>
+    <!--评阅心得-->
+    <update id="remarkHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework">
+        update hwk_homework
+        set comment=#{comment},
+            <choose>
+                <when test="reviewScore !='' and reviewScore !=null">
+                    review_score=#{reviewScore},
+                </when>
+                <otherwise>
+                    review_score='0',
+                </otherwise>
+            </choose>
+            review_time=CURRENT_TIMESTAMP,
+            review_teacher_id = #{reviewTeacherId}
+        where id=#{id}
     </update>
 
-    <!--判断是否存在-->
-    <select id="queryExistMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework" resultType="int">
-        select count(0)
+    <!--获取所有课时-->
+    <select id="getCourseSchedule" parameterType="com.sanmei.model.hwk.HwkMyHomework" resultType="com.sanmei.model.cos.CosCourseSchedule">
+        select id           id,
+               schedule_no  scheduleNo,
+               schedule_name scheduleName
         from cos_schedule
-        WHERE course_id=#{courseId} and schedule_name=#{scheduleName} and delete_status='1';
+        where course_id=#{courseId}
+          and delete_status='1'
     </select>
+
+    <!--获取班内人员列表-->
+    <select id="getClassUsers" parameterType="com.sanmei.model.hwk.HwkMyHomework" resultType="com.sanmei.model.sysUser.SysUser">
+        select a.user_id     id,
+               b.username    userName,
+               b.nickname    nickname
+        from cos_class a
+        left join sys_user b on a.user_id =b.id
+        where a.course_id=#{courseId}
+          and a.delete_status = '1'
+          and a.role != '讲师'
+    </select>
+
 </mapper>

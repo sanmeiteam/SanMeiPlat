@@ -1,6 +1,8 @@
 package com.sanmei.service.inf.hwk;
 
+import com.sanmei.model.cos.CosCourseSchedule;
 import com.sanmei.model.hwk.HwkMyHomework;
+import com.sanmei.model.sysUser.SysUser;
 
 import java.util.List;
 
@@ -18,10 +20,14 @@ public interface HwkMyHomeworkService {
      */
     List<HwkMyHomework> selectHwkMyHomework(HwkMyHomework hwkMyHomework);
 
-    Integer addHwkMyHomework(HwkMyHomework hwkMyHomework);
+    List<HwkMyHomework> selectHwkRemarkHomework(HwkMyHomework hwkMyHomework);
 
-    Integer updateHwkMyHomework(HwkMyHomework hwkMyHomework);
+    List<SysUser> getClassUsers(HwkMyHomework hwkMyHomework);
 
-    Integer deleteHwkMyHomework(HwkMyHomework hwkMyHomework);
+    List<CosCourseSchedule> getCourseSchedule(HwkMyHomework hwkMyHomework);
+
+    Integer uploadHwkMyHomework(HwkMyHomework hwkMyHomework);
+
+    Integer remarkHwkMyHomework(HwkMyHomework hwkMyHomework);
 
 }
