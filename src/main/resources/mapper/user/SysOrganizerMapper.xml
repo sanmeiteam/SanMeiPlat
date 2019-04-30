@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sanmei.dao.user.SysOrganizerDao">
+
+    <resultMap id="baseMap" type="com.sanmei.model.sysUser.SysOrganizer">
+        <id column="id" property="id"></id>
+        <result column="keywords" property="keywords"></result>
+        <result column="organizer" property="organizer"></result>
+        <result column="organizer_master" property="organizerMaster"></result>
+        <result column="organizer_address" property="organizerAddress"></result>
+        <result column="nickname" property="organizerMasterName"></result>
+        <result column="delete_status" property="deleteStatus"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_time" property="updateTime"></result>
+    </resultMap>
+
+    <select id="selectOrganizer" parameterType="com.sanmei.model.sysUser.SysOrganizer"
+            resultMap="baseMap">
+        select a.id,a.organizer,a.organizer_master,a.organizer_address,b.nickname,
+               a.delete_status,a.create_time,a.update_time
+        from sys_organizer a
+        left join sys_user b on a.organizer_master=b.id
+        where a.delete_status=1
+        <if test="keywords !='' and keywords !=null">
+            and CONCAT(a.organizer,'|',a.organizer_address,'|',b.nickname) like CONCAT('%', #{keywords}, '%')
+        </if>
+    </select>
+
+    <!--修改-->
+    <update id="updateOrganizer" parameterType="com.sanmei.model.sysUser.SysOrganizer">
+        update sys_organizer set
+        organizer = #{organizer},
+        organizer_master = #{organizerMaster},
+        organizer_address = #{organizerAddress}
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <!--新增-->
+    <insert id="addOrganizer" parameterType="com.sanmei.model.sysUser.SysOrganizer">
+        insert into sys_organizer
+        (organizer,
+         organizer_master,
+         organizer_address,
+         delete_status)
+        values
+        (
+            #{organizer},
+            #{organizerMaster},
+            #{organizerAddress},
+            '1'
+        )
+    </insert>
+
+    <!--逻辑删除-->
+    <update id="deleteOrganizer" parameterType="com.sanmei.model.sysUser.SysOrganizer">
+        update sys_organizer set
+        delete_status = '2'
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="getUsers" resultType="com.sanmei.model.sysUser.SysUser">
+        SELECT
+            id          id,
+            username    username,
+            nickname    nickname,
+            sex         sex
+        FROM sys_user
+        WHERE delete_status='1'
+        order by id desc
+    </select>
+
+    <select id="queryExistOrganizer" parameterType="com.sanmei.model.sysUser.SysOrganizer" resultType="int">
+        select count(0)
+        from sys_organizer
+        WHERE organizer=#{organizer}
+          AND delete_status='1';
+    </select>
+
+</mapper>
