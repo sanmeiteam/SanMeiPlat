@@ -29,5 +29,7 @@ public interface SysOrganizerDao {
 
     List<SysUser> getUsers();
 
+    List<SysOrganizer> getOrganizer();
+
     Integer queryExistOrganizer(SysOrganizer sysOrganizer);
 }

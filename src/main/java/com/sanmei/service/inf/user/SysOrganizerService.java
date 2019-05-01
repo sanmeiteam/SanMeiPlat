@@ -27,4 +27,6 @@ public interface SysOrganizerService {
 
     List<SysUser> getUsers();
 
+    List<SysOrganizer> getOrganizer();
+
 }

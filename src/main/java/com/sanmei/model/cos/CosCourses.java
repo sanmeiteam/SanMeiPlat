@@ -17,15 +17,18 @@ public class CosCourses implements Serializable, Cloneable {
     private String userId; //当前登录用户
 
     private Long id;
-    private String courseTypeId; //课程类型id
+    private Long courseTypeId; //课程类型id
     private String courseNumber; //课程期数
     private String courseName;   //课程名称
-    private String teacher;      //授课老师
-    private String address;      //地址  ??? 什么地址
+    private String teacher;      //授课老师 ID
+    private String teacherName;      //授课老师 姓名
+    private String address;      //承办方地址
     private String startTime;    //开始时间
-    private String signTeacher;  //报名老师
+    private String signTeacher;  //报名老师ID
+    private String signTeacherName;  //报名老师
     private String signTel;      //报名电话
-    private String organizer;    //承办方
+    private Long organizer;    //承办方ID
+    private String organizerName;    //承办方名称
     private String deleteStatus; //是否有效
     private LocalDate createTime;   //创建时间
     private LocalDate updateTime;    //更新时间
@@ -59,11 +62,11 @@ public class CosCourses implements Serializable, Cloneable {
         this.id = id;
     }
 
-    public String getCourseTypeId() {
+    public Long getCourseTypeId() {
         return courseTypeId;
     }
 
-    public void setCourseTypeId(String courseTypeId) {
+    public void setCourseTypeId(Long courseTypeId) {
         this.courseTypeId = courseTypeId;
     }
 
@@ -91,6 +94,14 @@ public class CosCourses implements Serializable, Cloneable {
         this.teacher = teacher;
     }
 
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -115,6 +126,14 @@ public class CosCourses implements Serializable, Cloneable {
         this.signTeacher = signTeacher;
     }
 
+    public String getSignTeacherName() {
+        return signTeacherName;
+    }
+
+    public void setSignTeacherName(String signTeacherName) {
+        this.signTeacherName = signTeacherName;
+    }
+
     public String getSignTel() {
         return signTel;
     }
@@ -123,12 +142,20 @@ public class CosCourses implements Serializable, Cloneable {
         this.signTel = signTel;
     }
 
-    public String getOrganizer() {
+    public Long getOrganizer() {
         return organizer;
     }
 
-    public void setOrganizer(String organizer) {
+    public void setOrganizer(Long organizer) {
         this.organizer = organizer;
+    }
+
+    public String getOrganizerName() {
+        return organizerName;
+    }
+
+    public void setOrganizerName(String organizerName) {
+        this.organizerName = organizerName;
     }
 
     public String getDeleteStatus() {

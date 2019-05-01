@@ -9,11 +9,14 @@
         <result column="course_number" property="courseNumber"></result>
         <result column="course_name" property="courseName"></result>
         <result column="teacher" property="teacher"></result>
+        <result column="teacherName" property="teacherName"></result>
         <result column="address" property="address"></result>
         <result column="start_time" property="startTime"></result>
         <result column="sign_teacher" property="signTeacher"></result>
-        <result column="sign_tel" property="signTel"></result>
+        <result column="signTeacherName" property="signTeacherName"></result>
+        <result column="signTel" property="signTel"></result>
         <result column="organizer" property="organizer"></result>
+        <result column="organizerName" property="organizerName"></result>
         <result column="delete_status" property="deleteStatus"></result>
         <result column="create_time" property="createTime"></result>
         <result column="update_time" property="updateTime"></result>
@@ -22,11 +25,19 @@
     </resultMap>
     <select id="selectCosCourses" parameterType="com.sanmei.model.cos.CosCourses"
             resultMap="baseMap">
-        SELECT a.*,b.course_type FROM cos_courses a
+        SELECT a.id,a.course_type_id,a.course_number,a.course_name,a.teacher,
+               e.organizer_address as address,a.start_time,a.sign_teacher,a.organizer,
+               a.create_time,a.update_time,
+               b.course_type,c.nickname as teacherName,d.nickname as signTeacherName,d.phone as signTel,
+        e.organizer as organizerName
+        FROM cos_courses a
         LEFT JOIN cos_course_type b ON a.course_type_id = b.id
+        left join sys_user c on a.teacher=c.id
+        left join sys_user d on a.sign_teacher=d.id
+        left join sys_organizer e on a.organizer=e.id
         where a.delete_status = 1
         <if test="keywords !='' and keywords !=null">
-            and CONCAT(a.course_name,'|',a.teacher,'|',a.organizer,'|',a.address,'|',a.sign_teacher,'|',a.sign_tel) like CONCAT('%', #{keywords}, '%')
+            and CONCAT(a.course_name,'|',c.nickname,'|',e.organizer,'|',a.address,'|',d.nickname,'|',d.phone) like CONCAT('%', #{keywords}, '%')
         </if>
         order by a.id desc
     </select>
@@ -67,12 +78,12 @@
     <insert id="addCosCourse" parameterType="com.sanmei.model.cos.CosCourses">
         insert into cos_courses
         (course_type_id,course_number,course_name,teacher,
-        address,start_time,sign_teacher,sign_tel,organizer,delete_status
+        start_time,sign_teacher,organizer,delete_status
         )
         values
         (
         #{courseTypeId},#{courseNumber},#{courseName},#{teacher},
-        #{address},#{startTime},#{signTeacher},#{signTel},#{organizer},'1'
+        #{startTime},#{signTeacher},#{organizer},'1'
         )
     </insert>
 
@@ -83,10 +94,8 @@
             course_number=#{courseNumber},
             course_name=#{courseName},
             teacher=#{teacher},
-            address=#{address},
             start_time=#{startTime},
             sign_teacher=#{signTeacher},
-            sign_tel=#{signTel},
             organizer=#{organizer}
         <where>
             id = #{id}

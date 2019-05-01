@@ -44,7 +44,12 @@ public class CosCoursesController {
         }
         return response;
     }
-
+    /**
+     * 获取选择课程类型下拉列表
+     *
+     * @param
+     * @return
+     */
     @GetMapping("/getCourseType")
     public Response<List<CosCourseType>> getCourseType() {
         Response<List<CosCourseType>> response = new Response<>();

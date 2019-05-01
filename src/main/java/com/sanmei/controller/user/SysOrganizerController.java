@@ -65,6 +65,25 @@ public class SysOrganizerController {
     }
 
     /**
+     * 获取选择 承办方 下拉列表
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("/getOrganizer")
+    public Response<List<SysOrganizer>> getOrganizer() {
+
+        Response<List<SysOrganizer>> response = new Response<>();
+        try {
+            List<SysOrganizer> returnList = sysOrganizerService.getOrganizer();
+            response.setResult(returnList);
+        } catch (ArgumentException e) {
+            e.printStackTrace();
+            response.setError("获取承办方列表失败！");
+        }
+        return response;
+    }
+    /**
      * 新增
      *
      * @param sysOrganizer

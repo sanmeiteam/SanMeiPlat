@@ -37,7 +37,10 @@ public class SysOrganizerServiceImpl implements SysOrganizerService {
         return sysOrganizerDao.getUsers();
     }
 
-
+    @Override
+    public List<SysOrganizer> getOrganizer() {
+        return sysOrganizerDao.getOrganizer();
+    }
 
     /**
      * 新增方法

@@ -68,10 +68,22 @@
             id          id,
             username    username,
             nickname    nickname,
+               phone    phone,
             sex         sex
         FROM sys_user
         WHERE delete_status='1'
         order by id desc
+    </select>
+
+    <select id="getOrganizer" resultType="com.sanmei.model.sysUser.SysOrganizer">
+        SELECT
+            id          id,
+            organizer    organizer,
+            organizer_address organizerAddress,
+            organizer_master    organizerMaster
+        FROM sys_organizer
+        WHERE delete_status='1'
+        order by id
     </select>
 
     <select id="queryExistOrganizer" parameterType="com.sanmei.model.sysUser.SysOrganizer" resultType="int">
