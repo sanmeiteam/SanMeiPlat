@@ -52,19 +52,25 @@
     </select>
 
     <select id="getCourses" parameterType="com.sanmei.model.cos.CosCourses" resultType="com.sanmei.model.cos.CosCourses" >
-        select id          id,
+        select distinct id          id,
                course_name courseName
         from
             (
-                SELECT id,course_name FROM cos_courses
-                WHERE delete_status='1'and id in
-                  (select course_id from cos_class where user_id in
-                  (select a.id from sys_user a left join sys_role b on a.role_id=b.id
-                  where a.id=#{userId} and a.delete_status='1' and b.data_control='1'))
+                SELECT cos.id,cos.course_name FROM cos_courses cos
+                left join sys_organizer org on cos.organizer=org.id
+                WHERE cos.delete_status='1'
+                  and (
+                            cos.id in
+                            (select course_id from cos_class where user_id in
+                                    (select a.id from sys_user a left join sys_role b on a.role_id=b.id
+                                    where a.id=#{userId} and a.delete_status='1' and b.data_control='1')
+                            )
+                        or (org.organizer_master = #{userId} and org.delete_status='1')
+                    )
                 union all
                 select id,course_name from cos_courses where
-                  (select count(a.id) from sys_user a left join sys_role b on a.role_id=b.id
-                  where a.id=#{userId} and a.delete_status='1' and b.data_control='0')=1 and delete_status='1'
+                        (select count(a.id) from sys_user a left join sys_role b on a.role_id=b.id
+                         where a.id=#{userId} and a.delete_status='1' and b.data_control='0')=1 and delete_status='1'
             ) c order by id desc
     </select>
 

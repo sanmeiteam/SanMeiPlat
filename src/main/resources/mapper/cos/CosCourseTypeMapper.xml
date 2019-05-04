@@ -13,79 +13,23 @@
 
     <select id="selectCosCourseType" parameterType="com.sanmei.model.cos.CosCourseType" resultMap="baseMap">
         select * from cos_course_type
-        <where>
-            <trim suffixOverrides="and">
-                <choose>
-                    <when test="id != null">
-                        id = #{id} and
-                    </when>
-                    <otherwise>
-                        delete_status = 1 and
-                        <if test="courseType != null and courseType != '' ">
-                            course_type = #{courseType} and
-                        </if>
-                    </otherwise>
-                </choose>
-            </trim>
-        </where>
+          where delete_status = 1
     </select>
 
-    <insert id="saveCosCourseType" parameterType="com.sanmei.model.cos.CosCourseType">
+    <insert id="addCosCourseType" parameterType="com.sanmei.model.cos.CosCourseType">
         insert into cos_course_type
-        <trim suffixOverrides=",">
-            <if test="courseType != null ">
-                course_type,
-            </if>
-            <if test="deleteStatus != null">
-                delete_status,
-            </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
-            <if test="update_time != null">
-                update_time,
-            </if>
-        </trim>
-        <trim suffixOverrides=",">
-            <if test="courseType != null ">
-                #{courseType},
-            </if>
-            <if test="deleteStatus != null">
-                #{deleteStatus},
-            </if>
-            <if test="createTime != null">
-                #{createTime},
-            </if>
-            <if test="updateTime != null">
-                #{updateTime},
-            </if>
-        </trim>
+        (course_type,delete_status) values (#{courseType},'1')
     </insert>
 
     <update id="updateCosCourseType" parameterType="com.sanmei.model.cos.CosCourseType">
         update cos_course_type set
-        <trim suffixOverrides="and">
-            <if test="courseType != null ">
-                course_type = #{courseType} and
-            </if>
-            <if test="deleteStatus != null">
-                delete_status = #{deleteStatus} and
-            </if>
-            #{updateTime} = now() and
-        </trim>
-        <where>
-            <trim suffixOverrides="and">
-                <choose>
-                    <when test="id != null">
-                        id = #{id} and
-                    </when>
-                    <otherwise>
-                        <if test="courseType != null ">
-                            course_type = #{courseType} and
-                        </if>
-                    </otherwise>
-                </choose>
-            </trim>
-        </where>
+        course_type = #{courseType}
+        where id = #{id}
+    </update>
+
+    <update id="deleteCosCourseType" parameterType="com.sanmei.model.cos.CosCourseType">
+        update cos_course_type set
+            delete_status = '2'
+        where id = #{id}
     </update>
 </mapper>

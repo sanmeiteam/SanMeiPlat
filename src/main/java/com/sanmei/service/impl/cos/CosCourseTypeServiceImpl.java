@@ -21,17 +21,21 @@ public class CosCourseTypeServiceImpl implements CosCourseTypeService {
 
     @Override
     public List<CosCourseType> selectCosCourseType(CosCourseType cosCourseType) {
-        List<CosCourseType> cosCourseTypes = cosCourseTypeDao.selectCosCourseType(cosCourseType);
-        return cosCourseTypes;
+        return cosCourseTypeDao.selectCosCourseType(cosCourseType);
     }
 
     @Override
-    public Integer saveCosCourseType(CosCourseType cosCourseType) {
-        return null;
+    public Integer addCosCourseType(CosCourseType cosCourseType) {
+        return cosCourseTypeDao.addCosCourseType(cosCourseType);
     }
 
     @Override
     public Integer updateCosCourseType(CosCourseType cosCourseType) {
-        return null;
+        return cosCourseTypeDao.updateCosCourseType(cosCourseType);
+    }
+
+    @Override
+    public Integer deleteCosCourseType(CosCourseType cosCourseType) {
+        return cosCourseTypeDao.deleteCosCourseType(cosCourseType);
     }
 }

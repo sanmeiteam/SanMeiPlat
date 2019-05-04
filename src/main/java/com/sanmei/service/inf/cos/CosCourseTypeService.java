@@ -1,8 +1,6 @@
 package com.sanmei.service.inf.cos;
 
 import com.sanmei.model.cos.CosCourseType;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 /**
@@ -14,7 +12,9 @@ public interface CosCourseTypeService {
 
     List<CosCourseType> selectCosCourseType(CosCourseType cosCourseType);
 
-    Integer saveCosCourseType(CosCourseType cosCourseType);
+    Integer addCosCourseType(CosCourseType cosCourseType);
 
     Integer updateCosCourseType(CosCourseType cosCourseType);
+
+    Integer deleteCosCourseType(CosCourseType cosCourseType);
 }

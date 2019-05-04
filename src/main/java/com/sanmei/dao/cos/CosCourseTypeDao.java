@@ -14,9 +14,10 @@ public interface CosCourseTypeDao {
 
     List<CosCourseType> selectCosCourseType(CosCourseType cosCourseType);
 
-    @Transactional(rollbackFor = Exception.class)
-    Integer saveCosCourseType(CosCourseType cosCourseType);
+    Integer addCosCourseType(CosCourseType cosCourseType);
 
-    @Transactional(rollbackFor = Exception.class)
     Integer updateCosCourseType(CosCourseType cosCourseType);
+
+    Integer deleteCosCourseType(CosCourseType cosCourseType);
+
 }
