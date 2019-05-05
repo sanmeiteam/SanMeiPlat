@@ -31,7 +31,10 @@ public interface HwkMyHomeworkDao {
     //返回课时
     List<CosCourseSchedule> getCourseSchedule(HwkMyHomework hwkMyHomework);
 
+    Integer addHwkMyHomework(HwkMyHomework hwkMyHomework);
+
     Integer uploadHwkMyHomework(HwkMyHomework hwkMyHomework);
 
     Integer remarkHwkMyHomework(HwkMyHomework hwkMyHomework);
+
 }

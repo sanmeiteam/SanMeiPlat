@@ -78,29 +78,27 @@
         order by a.schedule_no,b.update_time
     </select>
 
-    <!--上传心得-->
-    <update id="uploadHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework">
-        <choose>
-            <when test="id !='' and id !=null">
-                update hwk_homework
-                set title=#{title},
-                content=#{content},
-                homework_words=#{homeworkWords},
-                secret=#{secret}，
-                update_time=CURRENT_TIMESTAMP
-                where id=#{id}
-            </when>
-            <otherwise>
-                insert into hwk_homework
-                  (schedule_id,user_id,
-                   title,content,homework_words,secret,
-                   delete_status,create_time,update_time)
-                values
-                (#{scheduleId},#{userId},#{title},#{content},#{homeworkWords},#{secret},'1',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)
-            </otherwise>
-        </choose>
+    <!--预插入  用于后面的更新-->
+    <update id="addHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework">
+        insert into hwk_homework
+        (schedule_id,user_id,
+        title,content,homework_words,secret,
+        delete_status,create_time,update_time)
+        select
+        #{scheduleId},#{userId},#{title},#{content},#{homeworkWords},#{secret},'1',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP
+        FROM hwk_homework
+        WHERE NOT EXISTS (SELECT id FROM hwk_homework WHERE schedule_id = #{scheduleId} and user_id=#{userId}) limit 1;
     </update>
-
+    <!--上传心得  更新  依赖于上面的预插入-->
+    <update id="uploadHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework">
+        update hwk_homework
+        set title=#{title},
+            content=#{content},
+            homework_words=#{homeworkWords},
+            secret=#{secret},
+            update_time=CURRENT_TIMESTAMP
+        where schedule_id = #{scheduleId} and user_id=#{userId};
+    </update>
     <!--评阅心得-->
     <update id="remarkHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework">
         update hwk_homework

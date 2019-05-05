@@ -47,6 +47,7 @@ public class HwkMyHomeworkServiceImpl implements HwkMyHomeworkService {
 
     @Override
     public Integer uploadHwkMyHomework(HwkMyHomework hwkMyHomework) {
+        Integer rtn = HwkMyHomeworkDao.addHwkMyHomework(hwkMyHomework);
         return HwkMyHomeworkDao.uploadHwkMyHomework(hwkMyHomework);
     }
 
