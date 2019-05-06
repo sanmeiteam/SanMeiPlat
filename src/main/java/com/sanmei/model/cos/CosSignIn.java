@@ -14,7 +14,8 @@ public class CosSignIn implements Serializable {
     private String keywords; //关键字查询
     private String userId; //登录用户ID
     private String dataControl; //数据控制
-    private String signUserId; //签到人
+    private String signUser; //签到人id
+    private String nickName; //签到人姓名
     private String tempScheduleId; //批阅时，按课时选择  课时ID
 
     private Long id;
@@ -26,6 +27,11 @@ public class CosSignIn implements Serializable {
     private String scheduleDate; //课程表开始日期
     private String startTime; //课程表开始时间
     private String signTime;      //签到时间
+    private String isSign;      //是否签到
+    private String signState;      //签到状态
+    private String signUserId;      //签到人id  代
+    private String signUserName;      //签到人姓名  代
+
     private LocalDate createTime;   //创建时间
     private LocalDate updateTime;    //更新时间
 
@@ -57,12 +63,20 @@ public class CosSignIn implements Serializable {
         this.dataControl = dataControl;
     }
 
-    public String getSignUserId() {
-        return signUserId;
+    public String getSignUser() {
+        return signUser;
     }
 
-    public void setSignUserId(String signUserId) {
-        this.signUserId = signUserId;
+    public void setSignUser(String signUser) {
+        this.signUser = signUser;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getTempScheduleId() {
@@ -143,6 +157,38 @@ public class CosSignIn implements Serializable {
 
     public void setSignTime(String signTime) {
         this.signTime = signTime;
+    }
+
+    public String getIsSign() {
+        return isSign;
+    }
+
+    public void setIsSign(String isSign) {
+        this.isSign = isSign;
+    }
+
+    public String getSignState() {
+        return signState;
+    }
+
+    public void setSignState(String signState) {
+        this.signState = signState;
+    }
+
+    public String getSignUserId() {
+        return signUserId;
+    }
+
+    public void setSignUserId(String signUserId) {
+        this.signUserId = signUserId;
+    }
+
+    public String getSignUserName() {
+        return signUserName;
+    }
+
+    public void setSignUserName(String signUserName) {
+        this.signUserName = signUserName;
     }
 
     public LocalDate getCreateTime() {

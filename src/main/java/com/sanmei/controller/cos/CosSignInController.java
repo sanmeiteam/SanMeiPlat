@@ -91,10 +91,10 @@ public class CosSignInController {
         Response<String> response = new Response<>();
         try {
             cosSignInService.addCosSignIn(cosSignIn);
-            response.setResult("更新成功");
+            response.setResult("签到成功");
         } catch (Exception e) {
             e.printStackTrace();
-            response.setError("更新失败");
+            response.setError("签到失败");
         }
         return response;
     }

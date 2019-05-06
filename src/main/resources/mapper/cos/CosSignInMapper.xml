@@ -13,12 +13,15 @@
         <result column="schedule_name" property="scheduleName"></result>
         <result column="schedule_date" property="scheduleDate"></result>
 
-        <result column="user_id" property="signUserId"></result>
-        <result column="username" property="userName"></result>
+        <result column="user_id" property="signUser"></result>
         <result column="nickname" property="nickName"></result>
 
         <result column="start_time" property="startTime"></result>
         <result column="sign_time" property="signTime"></result>
+        <result column="is_sign" property="isSign"></result>
+        <result column="sign_state" property="signState"></result>
+        <result column="sign_user_id" property="signUserId"></result>
+        <result column="sign_user_name" property="signUserName"></result>
 
         <result column="create_time" property="createTime"></result>
         <result column="update_time" property="updateTime"></result>
@@ -27,22 +30,19 @@
     <!--查询签到信息-->
     <select id="selectCosSignIn" parameterType="com.sanmei.model.cos.CosSignIn"
             resultMap="baseMap">
-        select  a.course_id,d.course_name,a.id as schedule_id,a.schedule_no,a.schedule_name,a.schedule_date,a.last_date,
-        b.id,b.user_id,c.username,c.nickname,
-        a.start_time,b.sign_time,
-        b.update_time,b.create_time
-        from cos_schedule a
-        left join cos_sign_in b on a.id=b.schedule_id
-        left join sys_user c on b.user_id=c.id
-        left join cos_courses d on a.course_id=d.id
-        where a.delete_status = 1 and a.course_id= #{courseId}
-        <if test="tempScheduleId !='' and tempScheduleId !=null">
-            and a.id=#{tempScheduleId}
-        </if>
-        <if test="keywords !='' and keywords !=null">
-            and c.nickname like CONCAT('%', #{keywords}, '%')
-        </if>
-        order by a.schedule_no,b.update_time
+        select  sch.course_id,cos.course_name,sch.id as schedule_id,sch.schedule_no,sch.schedule_name,sch.schedule_date,sch.last_date,
+                sign.id,cls.user_id,usr.nickname,
+                sch.start_time,date_format(sign.sign_time,'%T') as sign_time,
+                sign.is_sign,sign.sign_state,
+                sign.sign_user_id,susr.nickname as sign_user_name,
+                sign.update_time,sign.create_time
+        from cos_class cls
+                 left join cos_courses cos on cls.course_id=cos.id and cos.delete_status='1' and cls.delete_status='1'
+                 left join cos_schedule sch on sch.course_id=cos.id and sch.delete_status='1'
+                 left join sys_user usr on usr.id=cls.user_id
+                 left join cos_sign_in sign on sch.id=sign.schedule_id and cls.user_id=sign.user_id
+                 left join sys_user susr on susr.id=sign.sign_user_id
+        where sch.course_id= #{courseId} and sch.id=#{tempScheduleId}
     </select>
 
     <!-- 签到是否存在-->
@@ -56,8 +56,10 @@
 
     <!--新增-->
     <insert id="addCosSignIn" parameterType="com.sanmei.model.cos.CosSignIn">
-        insert into cos_sign_in (schedule_id,user_id,sign_time)
-        values (#{scheduleId},#{userId},#{signTime})
+        insert into cos_sign_in (schedule_id,user_id,sign_time,is_sign,sign_state,sign_user_id)
+        values (#{scheduleId},#{signUser},
+                from_unixtime(unix_timestamp(concat(#{scheduleDate},' ',#{startTime})),'%Y-%m-%d %T'),
+                '是','补签',#{userId})
     </insert>
 
     <!--获取所有课时-->
