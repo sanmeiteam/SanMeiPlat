@@ -16,6 +16,7 @@ public class CosSignIn implements Serializable {
     private String dataControl; //数据控制
     private String signUser; //签到人id
     private String nickName; //签到人姓名
+    private String phone; //签到人电话
     private String tempScheduleId; //批阅时，按课时选择  课时ID
 
     private Long id;
@@ -77,6 +78,14 @@ public class CosSignIn implements Serializable {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getTempScheduleId() {

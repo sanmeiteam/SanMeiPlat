@@ -18,7 +18,7 @@ import java.util.List;
  * @date: 2019-04-10 21:32
  */
 @RestController
-@RequestMapping(value = "SignIn")
+@RequestMapping(value = "sign")
 public class CosSignInController {
 
     @Autowired
@@ -28,8 +28,8 @@ public class CosSignInController {
      * @param cosSignIn
      * @return
      */
-    @RequiresPermissions("class:list")
-    @GetMapping("/List")
+//    @RequiresPermissions("class:list")
+    @GetMapping("/list")
     public Response<List<CosSignIn>> selectHwkMyHomework(CosSignIn cosSignIn) {
         Response<List<CosSignIn>> response = new Response<>();
         try {
@@ -99,5 +99,22 @@ public class CosSignInController {
         return response;
     }
 
+    /**
+     * 新增
+     * @param cosSignIn
+     * @return
+     */
+    @PostMapping("/appSignData")
+    public Response<String> appCosSignIn(@RequestBody CosSignIn cosSignIn) {
+        Response<String> response = new Response<>();
+        try {
+            //cosSignInService.appCosSignIn(cosSignIn);
+            response.setResult("签到成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setError("签到失败");
+        }
+        return response;
+    }
 
 }

@@ -15,6 +15,7 @@
 
         <result column="user_id" property="signUser"></result>
         <result column="nickname" property="nickName"></result>
+        <result column="phone" property="phone"></result>
 
         <result column="start_time" property="startTime"></result>
         <result column="sign_time" property="signTime"></result>
@@ -31,7 +32,7 @@
     <select id="selectCosSignIn" parameterType="com.sanmei.model.cos.CosSignIn"
             resultMap="baseMap">
         select  sch.course_id,cos.course_name,sch.id as schedule_id,sch.schedule_no,sch.schedule_name,sch.schedule_date,sch.last_date,
-                sign.id,cls.user_id,usr.nickname,
+                sign.id,cls.user_id,usr.nickname,usr.phone,
                 sch.start_time,date_format(sign.sign_time,'%T') as sign_time,
                 sign.is_sign,sign.sign_state,
                 sign.sign_user_id,susr.nickname as sign_user_name,
@@ -42,7 +43,7 @@
                  left join sys_user usr on usr.id=cls.user_id
                  left join cos_sign_in sign on sch.id=sign.schedule_id and cls.user_id=sign.user_id
                  left join sys_user susr on susr.id=sign.sign_user_id
-        where sch.course_id= #{courseId} and sch.id=#{tempScheduleId}
+        where sch.id=#{tempScheduleId}
     </select>
 
     <!-- 签到是否存在-->
