@@ -28,6 +28,7 @@ public class CosSignIn implements Serializable {
     private String scheduleDate; //课程表开始日期
     private String startTime; //课程表开始时间
     private String signTime;      //签到时间
+    private String signDev;      //签到设备
     private String isSign;      //是否签到
     private String signState;      //签到状态
     private String signUserId;      //签到人id  代
@@ -166,6 +167,14 @@ public class CosSignIn implements Serializable {
 
     public void setSignTime(String signTime) {
         this.signTime = signTime;
+    }
+
+    public String getSignDev() {
+        return signDev;
+    }
+
+    public void setSignDev(String signDev) {
+        this.signDev = signDev;
     }
 
     public String getIsSign() {

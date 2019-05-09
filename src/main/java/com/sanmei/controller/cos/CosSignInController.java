@@ -100,11 +100,11 @@ public class CosSignInController {
     }
 
     /**
-     * 新增
+     * 新增 app sign
      * @param cosSignIn
      * @return
      */
-    @PostMapping("/appSignData")
+    @PostMapping("/sign")
     public Response<String> appCosSignIn(@RequestBody CosSignIn cosSignIn) {
         Response<String> response = new Response<>();
         try {
