@@ -30,7 +30,7 @@ public class CosSignInController {
      */
 //    @RequiresPermissions("class:list")
     @GetMapping("/list")
-    public Response<List<CosSignIn>> selectHwkMyHomework(CosSignIn cosSignIn) {
+    public Response<List<CosSignIn>> selectCosSignIn(CosSignIn cosSignIn) {
         Response<List<CosSignIn>> response = new Response<>();
         try {
             List<CosSignIn> returnList = cosSignInService.selectCosSignIn(cosSignIn);
@@ -108,7 +108,7 @@ public class CosSignInController {
     public Response<String> appCosSignIn(@RequestBody CosSignIn cosSignIn) {
         Response<String> response = new Response<>();
         try {
-            //cosSignInService.appCosSignIn(cosSignIn);
+            cosSignInService.appCosSignIn(cosSignIn);
             response.setResult("签到成功");
         } catch (Exception e) {
             e.printStackTrace();

@@ -27,4 +27,6 @@ public interface CosSignInService {
     List<CosCourseSchedule> getCourseSchedule(CosSignIn cosSignIn);
 
     Integer addCosSignIn(CosSignIn cosSignIn);
+
+    Integer appCosSignIn(CosSignIn cosSignIn);
 }

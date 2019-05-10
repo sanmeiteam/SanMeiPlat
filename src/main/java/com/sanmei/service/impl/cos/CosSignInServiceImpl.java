@@ -46,4 +46,8 @@ public class CosSignInServiceImpl implements CosSignInService {
         return cosSignInDao.addCosSignIn(cosSignIn);
     }
 
+    @Override
+    public Integer appCosSignIn(CosSignIn cosSignIn) {
+        return cosSignInDao.appCosSignIn(cosSignIn);
+    }
 }

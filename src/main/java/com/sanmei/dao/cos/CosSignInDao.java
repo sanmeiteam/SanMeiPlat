@@ -31,5 +31,9 @@ public interface CosSignInDao {
     //返回课时
     List<CosCourseSchedule> getCourseSchedule(CosSignIn cosSignIn);
 
+    //补签
     Integer addCosSignIn(CosSignIn cosSignIn);
+
+    //手机签到
+    Integer appCosSignIn(CosSignIn cosSignIn);
 }
