@@ -68,8 +68,7 @@
     <insert id="appCosSignIn" parameterType="com.sanmei.model.cos.CosSignIn">
         insert into cos_sign_in (schedule_id,user_id,sign_time,is_sign,sign_state,sign_user_id,sign_dev)
         values (#{tempScheduleId},#{signUser},
-                from_unixtime(unix_timestamp(concat(#{scheduleDate},' ',#{startTime})),'%Y-%m-%d %T'),
-                #{isSign},#{signState},#{signUser},#{signDev})
+                #{signTime},#{isSign},#{signState},#{signUser},#{signDev})
     </insert>
 
     <!--获取所有课时-->
