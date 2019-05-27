@@ -39,7 +39,7 @@
         <if test="keywords !='' and keywords !=null">
             and CONCAT(a.course_name,'|',c.nickname,'|',e.organizer,'|',a.address,'|',d.nickname,'|',d.phone) like CONCAT('%', #{keywords}, '%')
         </if>
-        order by a.id desc
+        order by a.course_name desc
     </select>
 
     <select id="selectCosCourseType" resultType="com.sanmei.model.cos.CosCourseType">
@@ -71,7 +71,7 @@
                 select id,course_name from cos_courses where
                         (select count(a.id) from sys_user a left join sys_role b on a.role_id=b.id
                          where a.id=#{userId} and a.delete_status='1' and b.data_control='0')=1 and delete_status='1'
-            ) c order by id desc
+            ) c order by course_name desc
     </select>
 
     <select id="queryExistCourse" parameterType="com.sanmei.model.cos.CosCourses" resultType="int">
