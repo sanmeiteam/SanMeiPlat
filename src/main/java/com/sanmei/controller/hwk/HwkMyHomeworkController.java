@@ -28,7 +28,7 @@ public class HwkMyHomeworkController {
      * @param HwkMyHomework
      * @return
      */
-    @RequiresPermissions("class:list")
+    @RequiresPermissions("hwk:list")
     @GetMapping("/hwkList")
     public Response<List<HwkMyHomework>> selectHwkMyHomework(HwkMyHomework HwkMyHomework) {
         Response<List<HwkMyHomework>> response = new Response<>();
@@ -47,7 +47,7 @@ public class HwkMyHomeworkController {
      * @param HwkMyHomework
      * @return
      */
-    @RequiresPermissions("class:list")
+    @RequiresPermissions("hwkR:list")
     @GetMapping("/remarkList")
     public Response<List<HwkMyHomework>> selectHwkRemarkHomework(HwkMyHomework HwkMyHomework) {
         Response<List<HwkMyHomework>> response = new Response<>();
@@ -106,7 +106,7 @@ public class HwkMyHomeworkController {
      * @param HwkMyHomework
      * @return
      */
-    @RequiresPermissions("class:update")
+    @RequiresPermissions("hwk:update")
     @PostMapping("/uploadData")
     public Response<String> uploadHwkMyHomework(@RequestBody HwkMyHomework HwkMyHomework) {
         Response<String> response = new Response<>();
@@ -126,16 +126,16 @@ public class HwkMyHomeworkController {
      * @param HwkMyHomework
      * @return
      */
-    @RequiresPermissions("class:delete")
+    @RequiresPermissions("hwkR:update")
     @PostMapping("/remarkData")
     public Response<String> remarkHwkMyHomework(@RequestBody HwkMyHomework HwkMyHomework) {
         Response<String> response = new Response<>();
         try {
             hwkMyHomeworkService.remarkHwkMyHomework(HwkMyHomework);
-            response.setResult("删除成功");
+            response.setResult("批阅成功");
         } catch (Exception e) {
             e.printStackTrace();
-            response.setError("删除失败");
+            response.setError("批阅失败");
         }
         return response;
     }
