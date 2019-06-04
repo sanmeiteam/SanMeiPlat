@@ -68,7 +68,7 @@
         LEFT JOIN sys_role_permission rp ON rp.role_id = r.id
         LEFT JOIN sys_permission p ON p.id = rp.permission_id
 
-        ORDER BY u.userId
+        ORDER BY CONVERT(u.username USING gbk) asc
     </select>
 
     <select id="getAllRoles" resultType="com.alibaba.fastjson.JSONObject">
