@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author: hxy
@@ -45,6 +46,22 @@ public class UserController {
         String username = request.getParameter("username");
         JSONObject jsonObject = CommonUtil.request2Json(request);
         return userService.listUser(jsonObject);
+    }
+
+    /**
+     * 查询用户信息
+     */
+    @GetMapping("/myInfo")
+    public Response<List<SysUser>> getMyInfo(SysUser SysUser) {
+        Response<List<SysUser>> response = new Response<>();
+        try {
+            List<SysUser> rerurnList = userService.getMyInfo(SysUser);
+            response.setResult(rerurnList);
+        } catch (ArgumentException e) {
+            e.printStackTrace();
+            response.setError("查询失败！");
+        }
+        return response;
     }
 
     @RequiresPermissions("user:add")

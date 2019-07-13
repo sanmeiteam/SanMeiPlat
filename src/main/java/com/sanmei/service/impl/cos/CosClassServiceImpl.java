@@ -28,6 +28,7 @@ public class CosClassServiceImpl implements CosClassService {
      */
     @Override
     public List<CosClass> selectCosClass(CosClass CosClass) {
+        CosClass.setOffSet(((CosClass.getPageNum()-1)<0 ? 0 : (CosClass.getPageNum()-1)) * CosClass.getPageRow());
         List<CosClass> CosClassList = CosClassDao.selectCosClass(CosClass);
         return CosClassList;
     }

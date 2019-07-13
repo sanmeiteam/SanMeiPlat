@@ -21,6 +21,13 @@ public interface UserDao {
 	 */
 	List<JSONObject> listUser(JSONObject jsonObject);
 
+
+	/**
+	 * 查询用户信息
+	 */
+	List<SysUser> getMyInfo(SysUser SysUser);
+
+
 	/**
 	 * 查询所有的角色
 	 * 在添加/修改用户的时候要使用此方法

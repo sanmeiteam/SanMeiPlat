@@ -13,6 +13,10 @@ public class CosClass implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String keywords; //关键字查询
+    private Integer totalCount; //开始页码
+    private Integer offSet; //开始页码
+    private Integer pageRow; //每页行数
+    private Integer pageNum; //页码
 
     private Long id;
     private String courseId; //课程id
@@ -35,6 +39,38 @@ public class CosClass implements Serializable {
     public String getKeywords() { return keywords;}
 
     public void setKeywords(String keywords) { this.keywords = keywords;}
+
+    public Integer getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(Integer totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public Integer getOffSet() {
+        return offSet;
+    }
+
+    public void setOffSet(Integer offSet) {
+        this.offSet = offSet;
+    }
+
+    public Integer getPageRow() {
+        return pageRow;
+    }
+
+    public void setPageRow(Integer pageRow) {
+        this.pageRow = pageRow;
+    }
+
+    public Integer getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
 
     public Long getId() {
         return id;

@@ -3,6 +3,8 @@ package com.sanmei.service.inf.user;
 import com.alibaba.fastjson.JSONObject;
 import com.sanmei.model.sysUser.SysUser;
 
+import java.util.List;
+
 /**
  * @author: hxy
  * @description: 用户/角色/权限
@@ -13,6 +15,13 @@ public interface UserService {
 	 * 用户列表
 	 */
 	JSONObject listUser(JSONObject jsonObject);
+
+
+	/**
+	 * 用户信息
+	 */
+	List<SysUser> getMyInfo(SysUser SysUser);
+
 
 	/**
 	 * 查询所有的角色

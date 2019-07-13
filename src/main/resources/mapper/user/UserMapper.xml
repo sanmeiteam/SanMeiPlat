@@ -71,12 +71,13 @@
         ORDER BY CONVERT(u.username USING gbk) asc
     </select>
 
+
     <select id="getAllRoles" resultType="com.alibaba.fastjson.JSONObject">
         SELECT
             id        roleId,
             role_name roleName
         FROM sys_role
-        WHERE delete_status='1'
+        WHERE delete_status='1' and id > 1
     </select>
 
     <insert id="addUser" useGeneratedKeys="true" keyProperty="userId">

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sanmei.dao.user.UserDao">
+
+    <select id="getMyInfo" resultType="com.sanmei.model.sysUser.SysUser">
+        SELECT
+            a.id          id,
+            a.username    username,
+            a.password    password,
+            a.sex         sex,
+            a.age         age,
+            a.phone       phone,
+            a.qq          qq,
+            a.wechat      wechat,
+            a.aera        aera,
+            a.education   education,
+            a.introducer  introducer,
+            b.role_name    roleName
+        FROM sys_user a left outer join sys_role b on a.role_id=b.id
+        WHERE a.delete_status='1' and a.id=#{id}
+        order by a.id desc
+    </select>
+
+</mapper>

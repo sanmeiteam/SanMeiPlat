@@ -3,9 +3,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sanmei.dao.cos.CosClassDao">
 
+    <select id="countUser" resultType="Integer">
+        SELECT count(0)
+        FROM sys_user u
+        WHERE u.delete_status = '1'
+    </select>
+
     <resultMap id="baseMap" type="com.sanmei.model.cos.CosClass">
         <id column="id" property="id"></id>
         <result column="keywords" property="keywords"></result>
+        <result column="totalCount" property="totalCount"></result>
         <result column="course_id" property="courseId"></result>
         <result column="course_name" property="courseName"></result>
         <result column="user_id" property="userId"></result>
@@ -19,6 +26,21 @@
         <result column="create_time" property="createTime"></result>
         <result column="update_time" property="updateTime"></result>
     </resultMap>
+
+    <select id="totalCount" parameterType="com.sanmei.model.cos.CosClass"
+            resultMap="baseMap">
+        select count(0) as totalCount
+        from cos_class cla
+        left join cos_courses cos on cla.course_id=cos.id
+        left join sys_user usr on cla.user_id=usr.id
+        where cla.delete_status = 1 and cla.course_id= #{courseId}
+        <if test="role !='' and role !=null">
+            and cla.role=#{role}
+        </if>
+        <if test="keywords !='' and keywords !=null">
+            and CONCAT(usr.username,'|',usr.nickname,'|',usr.sex) like CONCAT('%', #{keywords}, '%')
+        </if>
+    </select>
 
     <select id="selectCosClass" parameterType="com.sanmei.model.cos.CosClass"
             resultMap="baseMap">
@@ -35,6 +57,7 @@
         <if test="keywords !='' and keywords !=null">
             and CONCAT(usr.username,'|',usr.nickname,'|',usr.sex) like CONCAT('%', #{keywords}, '%')
         </if>
+        LIMIT #{offSet}, #{pageRow}
     </select>
 
     <!--修改-->

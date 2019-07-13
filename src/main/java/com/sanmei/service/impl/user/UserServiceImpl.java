@@ -36,6 +36,15 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 用户信息
+     */
+    @Override
+    public List<SysUser> getMyInfo(SysUser SysUser) {
+        List<SysUser> returnList = userDao.getMyInfo(SysUser);
+        return returnList;
+    }
+
+    /**
      * 添加用户
      */
     @Override
