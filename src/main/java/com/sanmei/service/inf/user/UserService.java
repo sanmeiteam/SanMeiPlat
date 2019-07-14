@@ -22,6 +22,15 @@ public interface UserService {
 	 */
 	List<SysUser> getMyInfo(SysUser SysUser);
 
+	/**
+	 * 修改密码
+	 */
+	Integer changePsd(SysUser SysUser);
+
+	/**
+	 * 修改我的信息
+	 */
+	Integer updateMyInfo(SysUser SysUser);
 
 	/**
 	 * 查询所有的角色

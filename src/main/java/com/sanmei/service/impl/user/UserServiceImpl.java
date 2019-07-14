@@ -2,6 +2,7 @@ package com.sanmei.service.impl.user;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sanmei.dao.user.UserDao;
+import com.sanmei.model.cos.CosClass;
 import com.sanmei.model.sysUser.SysUser;
 import com.sanmei.service.inf.user.UserService;
 import com.sanmei.util.CommonUtil;
@@ -42,6 +43,29 @@ public class UserServiceImpl implements UserService {
     public List<SysUser> getMyInfo(SysUser SysUser) {
         List<SysUser> returnList = userDao.getMyInfo(SysUser);
         return returnList;
+    }
+
+
+    /**
+     * 修改密码
+     * @param SysUser
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Integer changePsd(SysUser SysUser) {
+        return userDao.changePsd(SysUser);
+    }
+
+    /**
+     * 修改我的信息
+     * @param SysUser
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Integer updateMyInfo(SysUser SysUser) {
+        return userDao.updateMyInfo(SysUser);
     }
 
     /**

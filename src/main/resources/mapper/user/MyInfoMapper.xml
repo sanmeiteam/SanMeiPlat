@@ -7,7 +7,6 @@
         SELECT
             a.id          id,
             a.username    username,
-            a.password    password,
             a.sex         sex,
             a.age         age,
             a.phone       phone,
@@ -21,5 +20,29 @@
         WHERE a.delete_status='1' and a.id=#{id}
         order by a.id desc
     </select>
+    <!--修改密码-->
+    <update id="changePsd" parameterType="com.sanmei.model.sysUser.SysUser">
+        <if test="passWord !='' and passWord !=null">
+            update sys_user set
+            password = #{passWord}
+            <where>
+                id = #{id}
+            </where>
+        </if>
+    </update>
 
+    <!--修改我的信息-->
+    <update id="updateMyInfo" parameterType="com.sanmei.model.sysUser.SysUser">
+        UPDATE sys_user
+        SET
+        sex = #{sex}
+        , age = #{age}
+        , phone = #{phone}
+        , education = #{education}
+        , qq = #{qq}
+        , wechat = #{wechat}
+        , aera = #{aera}
+        , introducer = #{introducer}
+        WHERE id = #{id} and id != 10001
+    </update>
 </mapper>

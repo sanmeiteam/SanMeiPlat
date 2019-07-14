@@ -23,9 +23,19 @@ public interface UserDao {
 
 
 	/**
-	 * 查询用户信息
+	 * 查询我的信息
 	 */
 	List<SysUser> getMyInfo(SysUser SysUser);
+
+	/**
+	 * 修改密码
+	 */
+	Integer changePsd(SysUser SysUser);
+
+	/**
+	 * 修改我的信息
+	 */
+	Integer updateMyInfo(SysUser SysUser);
 
 
 	/**

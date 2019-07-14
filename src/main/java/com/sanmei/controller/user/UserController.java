@@ -64,6 +64,42 @@ public class UserController {
         return response;
     }
 
+    /**
+     * 修改密码
+     * @param SysUser
+     * @return
+     */
+    @PostMapping("/changePsd")
+    public Response<String> changePsd(@RequestBody SysUser SysUser) {
+        Response<String> response = new Response<>();
+        try {
+            userService.changePsd(SysUser);
+            response.setResult("密码更新成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setError("更新失败");
+        }
+        return response;
+    }
+
+    /**
+     * 修改我的信息
+     * @param SysUser
+     * @return
+     */
+    @PostMapping("/updateMyInfo")
+    public Response<String> updateMyInfo(@RequestBody SysUser SysUser) {
+        Response<String> response = new Response<>();
+        try {
+            userService.updateMyInfo(SysUser);
+            response.setResult("更新个人信息成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setError("更新失败");
+        }
+        return response;
+    }
+
     @RequiresPermissions("user:add")
     @PostMapping("/addUser")
     public JSONObject addUser(@RequestBody JSONObject requestJson) {
