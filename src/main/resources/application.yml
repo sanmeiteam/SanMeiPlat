@@ -1,12 +1,17 @@
 spring:
   datasource:
 #      url: jdbc:mysql://123.206.62.148:3306/SMDB?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+#####  生产链接
       url: jdbc:mysql://39.97.121.85:3306/smdb?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
       username: sanmei
-#      password: 123456
-#      password: goholee
       password: SanMei@2019
-      driver-class-name: com.mysql.jdbc.Driver
+#####  本地测试链接
+#    url: jdbc:mysql://127.0.0.1:3306/smdb?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+#    username: root
+#    password: goholee
+
+
+    driver-class-name: com.mysql.jdbc.Driver
 mybatis:
    mapperLocations: classpath:/mapper/*/*.xml
 #   configuration: log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
