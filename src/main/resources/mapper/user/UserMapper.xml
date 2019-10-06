@@ -56,7 +56,7 @@
         FROM sys_user
         WHERE delete_status = '1'
         <if test="keywords !='' and keywords !=null">
-            and CONCAT(nickname,'|',username,'|',sex,'|',age,'|',phone,'|',qq,'|',wechat,'|',aera,'|',education,'|',introducer) like CONCAT('%', #{keywords}, '%')
+            and CONCAT(username,'|',sex,'|',age,'|',phone,'|',qq,'|',wechat,'|',aera,'|',education,'|',introducer) like CONCAT('%', #{keywords}, '%')
         </if>
         <if test="roleId !='' and roleId !=null">
             and role_id = #{roleId}
