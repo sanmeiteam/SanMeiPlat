@@ -150,38 +150,41 @@ public class UserController {
                     String stringValue = ExcelUtils.getStringValue(row.getCell(j));
                     //姓名
                     if (j == 0) {
-                        sysUser.setNickName(stringValue);
-                    } else if (j == 1) {
+//                        sysUser.setNickName(stringValue);
+//                    } else if (j == 1) {
                         //用户名
+                        sysUser.setNickName(stringValue);
                         sysUser.setUserName(stringValue);
-                    } else if (j == 2) {
-                        //角色
-                        sysUser.setRoleName(stringValue);
-                    } else if (j == 3) {
+//                    } else if (j == 1) {
+//                        //角色
+//                        sysUser.setRoleName(stringValue);
+                    } else if (j == 1) {
                         //性别
                         sysUser.setSex(stringValue);
-                    } else if (j == 4) {
+                    } else if (j == 2) {
                         //年龄
                         sysUser.setAge(Integer.parseInt(stringValue));
-                    } else if (j == 5) {
+                    } else if (j == 3) {
                         //电话
                         sysUser.setPhone(stringValue);
-                    } else if (j == 6) {
+                    } else if (j == 4) {
                         //qq
                         sysUser.setQq(stringValue);
-                    } else if (j == 7) {
+                    } else if (j == 5) {
                         //微信
                         sysUser.setWechat(stringValue);
-                    } else if (j == 8) {
+                    } else if (j == 6) {
                         //区域
                         sysUser.setAera(stringValue);
-                    } else if (j == 9) {
+                    } else if (j == 7) {
                         //学历
                         sysUser.setEducation(stringValue);
                     } else {
                         //介绍人
                         sysUser.setIntroducer(stringValue);
                     }
+                    sysUser.setRoleName("学员");//默认为学员
+                    sysUser.setPassWord("lingguibafa");//默认为学员
                     sysUser.setCreateTime(LocalDate.now());
                     sysUser.setUpdateTime(LocalDate.now());
                     sysUser.setDeleteStatus("1");
