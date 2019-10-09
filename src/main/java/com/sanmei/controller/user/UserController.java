@@ -185,8 +185,8 @@ public class UserController {
                     }
                     sysUser.setRoleName("学员");//默认为学员
                     sysUser.setPassWord("lingguibafa");//默认为学员
-                    sysUser.setCreateTime(LocalDate.now());
-                    sysUser.setUpdateTime(LocalDate.now());
+                    //sysUser.setCreateTime(LocalDate.now());
+                    //sysUser.setUpdateTime(LocalDate.now());
                     sysUser.setDeleteStatus("1");
                 }
                 //插入sysuser
