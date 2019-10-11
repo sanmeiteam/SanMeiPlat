@@ -114,4 +114,11 @@ public interface UserDao {
 	 * @return
 	 */
 	int saveSysUser(SysUser sysUser);
+
+	/**
+	 * 返回用户数量  用于判断是否存在
+	 * @param sysUser
+	 * @return
+	 */
+	int countSysUser(SysUser sysUser);
 }

@@ -76,4 +76,6 @@ public interface UserService {
 
 	int saveSysUser(SysUser sysUser);
 
+	int countSysUser(SysUser sysUser);
+
 }

@@ -136,12 +136,13 @@ public class UserController {
             if (!file.getOriginalFilename().endsWith(".xls")) {
                 throw new ArgumentException("导入功能只支持xls文件");
             }
-
             InputStream inputStream = file.getInputStream();
             HSSFWorkbook hssfWorkbook = new HSSFWorkbook(inputStream);
             //默认有一个sheet页面
             HSSFSheet sheet = hssfWorkbook.getSheetAt(0);
             int count = 0;
+            int repeatCount=0;
+            String repeatUser="";
             //从第一行开始,第一行是表头
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 HSSFRow row = sheet.getRow(i);
@@ -190,10 +191,23 @@ public class UserController {
                     sysUser.setDeleteStatus("1");
                 }
                 //插入sysuser
-                int i1 = userService.saveSysUser(sysUser);
-                count += i1;
+                if (userService.countSysUser(sysUser) > 0) {
+                    repeatUser = repeatUser + "[" + sysUser.getUserName()+ "]";
+                    repeatCount ++;
+                }
+                else {
+                    int i1 = userService.saveSysUser(sysUser);
+                    count += i1;
+                }
+
             }
-            response.setResult("导入了" + count + "条数据");
+            if (repeatCount > 0){  ///存在重复
+                response.setResult("成功导入了" + count + "条数据；其中"+repeatUser+"共"+repeatCount+"人已存在");
+            }
+            else {   // 不存在重复
+                response.setResult("成功导入了" + count + "条数据");
+            }
+
         } catch (ArgumentException e) {
             e.printStackTrace();
             response.setError("导入失败");

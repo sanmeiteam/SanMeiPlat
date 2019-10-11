@@ -234,6 +234,13 @@
          AND delete_status='1';
     </select>
 
+    <select id="countSysUser" resultType="int" parameterType="com.sanmei.model.sysUser.SysUser">
+        select count(0)
+        from sys_user
+        WHERE username=#{userName}
+          AND delete_status='1';
+    </select>
+
     <insert id="saveSysUser" parameterType="com.sanmei.model.sysUser.SysUser">
         insert into sys_user
         (

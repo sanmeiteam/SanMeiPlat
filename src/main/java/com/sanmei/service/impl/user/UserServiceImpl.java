@@ -218,4 +218,16 @@ public class UserServiceImpl implements UserService {
     public int saveSysUser(SysUser sysUser) {
         return userDao.saveSysUser(sysUser);
     }
+
+    /**
+     * 返回用户数量  用于判断是否存在
+     *
+     * @param sysUser
+     * @return
+     */
+    @Override
+    public int countSysUser(SysUser sysUser) {
+        return userDao.countSysUser(sysUser);
+    }
+
 }
