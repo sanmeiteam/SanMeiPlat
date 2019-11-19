@@ -22,6 +22,8 @@ public interface HwkMyHomeworkService {
 
     List<HwkMyHomework> selectHwkRemarkHomework(HwkMyHomework hwkMyHomework);
 
+    List<HwkMyHomework> selectHwkStatistics(HwkMyHomework hwkMyHomework);
+
     List<SysUser> getClassUsers(HwkMyHomework hwkMyHomework);
 
     List<CosCourseSchedule> getCourseSchedule(HwkMyHomework hwkMyHomework);

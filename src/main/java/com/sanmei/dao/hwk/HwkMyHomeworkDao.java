@@ -25,6 +25,8 @@ public interface HwkMyHomeworkDao {
 
     List<HwkMyHomework> selectHwkRemarkHomework(HwkMyHomework hwkMyHomework);
 
+    List<HwkMyHomework> selectHwkStatistics(HwkMyHomework hwkMyHomework);
+
     //返回人员
     List<SysUser> getClassUsers(HwkMyHomework hwkMyHomework);
 

@@ -42,6 +42,14 @@ public class HwkMyHomework implements Serializable {
     private LocalDate createTime;   //创建时间
     private LocalDate updateTime;    //更新时间
 
+    // 以下用于作业完成情况学分统计
+    private Integer signScore;      //签到所得学分
+    private Integer hwkScore;      //作业字数所得学分
+    private Integer timeScore;      //按时提交作业所得学分
+    private Integer actReviewScore;      //讲师评阅所得学分
+    private Integer scores;    //课时总学分
+
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -276,5 +284,45 @@ public class HwkMyHomework implements Serializable {
 
     public void setUpdateTime(LocalDate updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getSignScore() {
+        return signScore;
+    }
+
+    public void setSignScore(Integer signScore) {
+        this.signScore = signScore;
+    }
+
+    public Integer getHwkScore() {
+        return hwkScore;
+    }
+
+    public void setHwkScore(Integer hwkScore) {
+        this.hwkScore = hwkScore;
+    }
+
+    public Integer getTimeScore() {
+        return timeScore;
+    }
+
+    public void setTimeScore(Integer timeScore) {
+        this.timeScore = timeScore;
+    }
+
+    public Integer getActReviewScore() {
+        return actReviewScore;
+    }
+
+    public void setActReviewScore(Integer actReviewScore) {
+        this.actReviewScore = actReviewScore;
+    }
+
+    public Integer getScores() {
+        return scores;
+    }
+
+    public void setScores(Integer scores) {
+        this.scores = scores;
     }
 }

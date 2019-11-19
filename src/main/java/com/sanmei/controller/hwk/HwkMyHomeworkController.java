@@ -62,6 +62,25 @@ public class HwkMyHomeworkController {
     }
 
     /**
+     * 根据课时或学员获取 作业完成情况 学分信息
+     * @param HwkMyHomework
+     * @return
+     */
+    @RequiresPermissions("cosScore:list")
+    @GetMapping("/hwkStatistics")
+    public Response<List<HwkMyHomework>> selectHwkStatistics(HwkMyHomework HwkMyHomework) {
+        Response<List<HwkMyHomework>> response = new Response<>();
+        try {
+            List<HwkMyHomework> returnDataList = hwkMyHomeworkService.selectHwkStatistics(HwkMyHomework);
+            response.setResult(returnDataList);
+        } catch (ArgumentException e) {
+            e.printStackTrace();
+            response.setError("查询失败！");
+        }
+        return response;
+    }
+
+    /**
      * 获取选择 课时 下拉列表
      *
      * @param

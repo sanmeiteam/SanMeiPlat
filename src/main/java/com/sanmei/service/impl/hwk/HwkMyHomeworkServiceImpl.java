@@ -34,6 +34,12 @@ public class HwkMyHomeworkServiceImpl implements HwkMyHomeworkService {
     }
 
     @Override
+    public List<HwkMyHomework> selectHwkStatistics(HwkMyHomework hwkMyHomework) {
+        List<HwkMyHomework> DataList = HwkMyHomeworkDao.selectHwkStatistics(hwkMyHomework);
+        return DataList;
+    }
+
+    @Override
     public List<SysUser> getClassUsers(HwkMyHomework hwkMyHomework) {
         List<SysUser> DataList = HwkMyHomeworkDao.getClassUsers(hwkMyHomework);
         return DataList;

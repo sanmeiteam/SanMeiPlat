@@ -30,21 +30,31 @@
         <result column="delete_status" property="deleteStatus"></result>
         <result column="create_time" property="createTime"></result>
         <result column="update_time" property="updateTime"></result>
+
+        <result column="sign_score" property="signScore"></result>
+        <result column="hwk_score" property="hwkScore"></result>
+        <result column="time_score" property="timeScore"></result>
+        <result column="act_review_score" property="actReviewScore"></result>
+        <result column="scores" property="scores"></result>
+
     </resultMap>
 
     <!--学员上传心得列表  用于我的作业-->
     <select id="selectHwkMyHomework" parameterType="com.sanmei.model.hwk.HwkMyHomework"
             resultMap="baseMap">
         select  a.course_id,d.course_name,a.id as schedule_id,a.schedule_no,a.schedule_name,a.schedule_date,a.last_date,
-        b.id,b.user_id,c.username,c.nickname,
+        b.id,a.user_id,c.username,c.nickname,
         b.title,b.content,b.homework_words,b.secret,
         (CASE WHEN char_length(b.comment)>6 THEN concat(substring(b.comment,1,6),'...') ELSE b.comment END) as showComment,
         b.comment,b.review_score,b.review_time,b.review_teacher_id,(CASE WHEN b.review_teacher_id>'0' THEN '1' ELSE '0' END) as isReview,
-        b.delete_status,b.update_time,b.create_time
-        from cos_schedule a
-        left join hwk_homework b on a.id=b.schedule_id and b.user_id= #{userId} and b.delete_status='1'
-        left join sys_user c on b.user_id=c.id
+        b.delete_status,b.update_time,b.create_time,e.scores
+        from (select sch.course_id,sch.id,sch.schedule_no,sch.schedule_name,
+        cls.user_id,sch.schedule_date,sch.last_date,sch.delete_status
+        from cos_schedule sch,cos_class cls where sch.course_id=cls.course_id and cls.user_id=#{userId}) a
+        left join hwk_homework b on a.id=b.schedule_id and a.user_id=b.user_id and b.delete_status='1'
+        left join sys_user c on a.user_id=c.id
         left join cos_courses d on a.course_id=d.id
+        left join v_schedule_score e on a.course_id=e.course_id and a.id=e.schedule_id and a.user_id=e.user_id
         where a.delete_status = 1 and a.course_id= #{courseId}
         <if test="keywords !='' and keywords !=null">
             and b.title like CONCAT('%', #{keywords}, '%')
@@ -76,6 +86,25 @@
             and b.title like CONCAT('%', #{keywords}, '%')
         </if>
         order by a.schedule_no,b.update_time
+    </select>
+
+    <!-- 作业完成情况查询  用于显示课时学分-->
+    <select id="selectHwkStatistics" parameterType="com.sanmei.model.hwk.HwkMyHomework"
+            resultMap="baseMap">
+        select a.course_id,b.course_name,a.schedule_id,c.schedule_no,c.schedule_name,a.user_id,d.username,
+        a.hwk_score,a.time_score,a.review_score as act_review_score,a.sign_score,a.scores
+        from v_schedule_score a
+        left join cos_courses b on a.course_id=b.id
+        left join cos_schedule c on a.schedule_id=c.id
+        left join sys_user d on a.user_id = d.id
+        where a.course_id= #{courseId}
+        <if test="tempUserId !='' and tempUserId !=null">
+            and a.user_id=#{tempUserId}
+        </if>
+        <if test="tempScheduleId !='' and tempScheduleId !=null">
+            and a.schedule_id=#{tempScheduleId}
+        </if>
+        order by c.schedule_no
     </select>
 
     <!--预插入  用于后面的更新-->
